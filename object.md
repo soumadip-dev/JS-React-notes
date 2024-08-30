@@ -42,7 +42,7 @@ Object.keys(product).length; // Number of key-value pairs
 ## Immutability in Objects
 
 ### `const` and Object Properties:
-Using `const` prevents reassignment of the variable, but it does not make the object's properties immutable:
+Using `const` prevents reassignment of the variable, but it does not make the object's properties immutable. When you create an object, the reference is stored in the variable, while the object itself is stored in heap memory.
 
 ```javascript
 const obj = { x: 10, y: 20 };
