@@ -6,6 +6,7 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 
 
 * [Scope](scope.md)
+* [Objects](object.md)
 * [Foreword](foreword.md) (by [Brian Holt](https://twitter.com/holtbt))
 * [Preface](../preface.md)
 * [Chapter 1: What Is JavaScript?](ch1.md)
