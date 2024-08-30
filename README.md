@@ -1,0 +1,2 @@
+# js-learning-notes
+A comprehensive collection of notes and examples from my JavaScript learning journey. Covers essential concepts, best practices, and practical code snippets.
