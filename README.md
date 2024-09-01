@@ -4,7 +4,6 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 
 ## Table of Contents
 
-
 * [Scope](scope.md)
 * [Objects](object.md)
 * [Foreword](foreword.md) (by [Brian Holt](https://twitter.com/holtbt))
@@ -15,3 +14,9 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 * [Chapter 4: The Bigger Picture](ch4.md)
 * [Appendix A: Exploring Further](apA.md)
 * [Appendix B: Practice, Practice, Practice!](apB.md)
+
+
+
+
+
+* [Interview](Interview.md)
