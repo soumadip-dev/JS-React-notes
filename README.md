@@ -5,9 +5,9 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 ## Table of Contents
 ---
 
-
-* [Scope](scope.md)
 * [Objects](object.md)
+* [Scope](scope.md)
+
 
 
 
