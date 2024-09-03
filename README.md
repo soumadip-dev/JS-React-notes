@@ -7,6 +7,7 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 
 * [Objects](object.md)
 * [Scope](scope.md)
+* [function](function.md)
 
 
 
