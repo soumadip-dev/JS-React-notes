@@ -13,7 +13,7 @@ JavaScript has four main pillars:
 
 ---
 
-**Note:** To fully understand scoping in JavaScript, it's essential to grasp the difference between compiled and interpreted languages:
+| **Note:** To fully understand scoping in JavaScript, it's essential to grasp the difference between compiled and interpreted languages:
 
 - **Compiled Languages (e.g., C, C++):** Code is analyzed and compiled into an executable binary by a compiler. Errors must be fixed before any code is executed.
 - **Interpreted Languages (e.g., Bash):** Code is executed line by line. If an error occurs, execution stops at the error.
