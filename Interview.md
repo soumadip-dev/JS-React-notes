@@ -192,7 +192,30 @@ outerFunction();
 ```
 
 ---
+### Difference Between `this` in Regular Functions and Arrow Functions
 
+- **Regular Function:** In a regular function, `this` refers to the context in which the function was called, also known as the "call site." The call site can be an object, a position in the code, or it can be influenced by the `new` keyword.
+
+- **Arrow Function:** In an arrow function, `this` is lexically bound, meaning it inherits `this` from the surrounding scope where the arrow function was defined.
+
+```javascript
+const obj = {
+  x: 10,
+  y: 20,
+  outerFn: function () {
+    const innerFn = () => {
+      console.log(this.x, this.y);
+    };
+    innerFn();
+  },
+};
+
+obj.outerFn(); 
+```
+
+In this code, `this` inside the arrow function `innerFn` is not determined by the function itself. Instead, it inherits `this` from its surrounding scope, which is the `outerFn` method. Since `outerFn` is a regular function and `this` within it refers to the `obj` object, `innerFn` also uses `this` from the `obj` object. As a result, `console.log(this.x, this.y);` outputs `10 20`.
+
+---
 ### Can you explain the difference between `==` and `===`?
 
 - The `==` operator is called the **equality operator**, while the `===` operator is called the **strict equality operator**.
