@@ -145,7 +145,11 @@ iphone.displayProduct();
 In the example above, the `Product` function acts as a **function constructor.** The `this` keyword is used to assign properties and methods to the newly created object. When the `new` keyword is used, it triggers a similar four-step process as in class-based constructors, ensuring that the object is properly constructed and linked to its prototype.
 
 ### `Static` Keyword in JavaScript
-The `static` keyword in JavaScript is used to define methods or properties on a class that belong to the class itself, rather than instances of the class. This means you can call a static method or access a static property without creating an instance of the class.
+The `static` keyword in JavaScript is used to define methods or properties on a class that belong to the class itself, rather than instances of the class.
+
+A common use case of the `static` keyword is in the builder design pattern, where it is used to implement a builder getter function.
+
+Here’s an example of how the `static` keyword is used:
 
 ```javascript
 class Product {
