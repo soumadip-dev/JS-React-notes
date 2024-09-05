@@ -1,5 +1,3 @@
-# Object in JavaScript
-
 ## Important Object Methods
 
 Consider the following object:
@@ -45,6 +43,7 @@ Object.keys(product).length;
 // Output: 5
 ```
 
+---
 ## Immutability in Objects
 
 ### `const` and Object Properties
@@ -156,3 +155,131 @@ function customFreeze(obj) {
     Object.preventExtensions(obj); // Prevents adding new properties
 }
 ```
+
+
+---
+## Object Destructuring
+
+`Object destructuring` is a convenient feature in JavaScript that allows you to extract properties from an object and assign them to variables. This simplifies the process of accessing object properties and reduces the need to use dot notation.
+
+```javascript
+const person = {
+  name: 'Soumadip',
+  age: 21,
+  city: 'Durgapur'
+};
+
+const { name, age } = person;
+console.log(name); // Soumadip
+console.log(age);  // 21
+```
+
+In this example, the `name` and `age` properties of the `person` object are extracted directly into variables. By using curly braces with variable names that match the object properties, JavaScript unpacks the object and assigns the corresponding values to the variables. Note that the variable names must match the key names in the object; otherwise, the result will be `undefined`.
+
+#### Default Values
+
+You can assign **default values** to variables if the property does not exist in the object. If the property exists, its value will be used:
+
+```javascript
+const { name, country = 'USA' } = person;
+console.log(country); // USA
+```
+
+#### Renaming Variables
+
+Object destructuring allows you to `rename` extracted properties:
+
+```javascript
+const { name: fullName, age: personAge } = person;
+console.log(fullName);  // Soumadip
+console.log(personAge); // 21
+```
+
+#### Destructuring Nested Objects
+
+To destructure nested objects, use additional curly braces:
+
+```javascript
+const product = {
+  name: 'Iphone 14 Pro',
+  price: 51000,
+  category: { name: 'Mobiles', ID: 12 }
+};
+
+const { category: { name: categoryName } } = product;
+console.log(categoryName); // Mobiles
+```
+
+#### Rest Parameter in Object
+
+You can use the `rest` operator to collect the remaining properties of an object into a new object:
+
+```javascript
+const { name, ...otherDetails } = person;
+console.log(name);          // Soumadip
+console.log(otherDetails);  // { age: 21, city: 'Durgapur' }
+```
+
+In this example, the `rest` operator (`...otherDetails`) collects all remaining properties of the `person` object that were not explicitly destructured.
+
+#### Spread Operator in Object
+
+The `spread` operator can be used to create a new object by copying properties from an existing object:
+
+```javascript
+const newPerson = { ...person, country: 'India' };
+console.log(newPerson);
+// { name: 'Soumadip', age: 21, city: 'Durgapur', country: 'India' }
+```
+
+In this example, the `spread` operator (`...person`) copies all properties from the `person` object into `newPerson`. You can add or override properties as needed.
+
+---
+## Array Destructuring
+
+All destructuring methods apply to arrays as well. The main difference is that, for arrays, we use square brackets `[]` instead of curly braces `{}`. 
+
+When destructuring arrays, variable names don't matter; only their order does. This means you can assign any names to the variables, and they will receive values sequentially from the array.
+
+```javascript
+const [eng, bng, math, science] = [100, 200, 300, 400];
+console.log(eng); // Prints 100
+```
+
+#### Using the Rest Operator in Array Destructuring
+
+The rest operator `...` can be used to collect the remaining elements of an array into a new array.
+
+```javascript
+const [first, second, ...rest] = [10, 20, 30, 40, 50];
+console.log(first);  // Prints 10
+console.log(second); // Prints 20
+console.log(rest);   // Prints [30, 40, 50]
+```
+
+The **rest parameter** syntax also allows a function to accept an indefinite number of arguments as an array:
+
+```javascript
+function sum(...theArgs) {
+  let total = 0;
+  for (const arg of theArgs) {
+    total += arg;
+  }
+  return total;
+}
+
+console.log(sum(1, 2, 3)); // Output: 6
+console.log(sum(1, 2, 3, 4)); // Output: 10
+```
+
+#### Using the Spread Operator with Arrays
+
+The spread operator `...` expands an array into individual elements. This is helpful for combining arrays or passing array elements as arguments to functions.
+
+```javascript
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4, 5];
+console.log(newNumbers); // Prints [1, 2, 3, 4, 5]
+```
+
+In this example, `...numbers` spreads the elements of the `numbers` array into the `newNumbers` array.
