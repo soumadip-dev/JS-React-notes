@@ -9,6 +9,8 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 * [Scope](scope.md)
 * [function](function.md)
 * [OOPS](oops.md)
+* [Prototype](prototype.md)
+* 
 
 
 
