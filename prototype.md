@@ -178,3 +178,59 @@ In this example:
 
 ![](https://github.com/soumadip-dev/js-learning-notes/blob/main/Images/protoInheritance.jpg)
 
+
+### `Call`, `Apply`, and `Bind` Methods in JavaScript
+
+In JavaScript, `call`, `apply`, and `bind` are three very useful methods that allow you to control the value of the `this` keyword within a function.
+
+#### `Call`:
+The `call` method allows you to explicitly set the value of `this` inside a function. It invokes the function with a specific `this` context and passes arguments individually.
+
+```javascript
+const myObj = {
+    name: "Ram",
+    greet: function(welcomeMessage, location) {
+        console.log(`God ${this.name} ${welcomeMessage} to ${location}`);
+    }
+}
+```
+
+If you call `myObj.greet()`, `this` refers to `myObj`, so the name will be "Ram". To set `this` to another object, you can use the `call` method.
+
+```javascript
+const newObj = {
+    name: "Krishna"
+}
+
+// Using call to set `this` to newObj and passing two arguments
+myObj.greet.call(newObj, "Welcome", "Vrindavan"); 
+// Output: God Krishna Welcome to Vrindavan
+```
+
+The `call` method allows us to pass the first argument as the new `this` context. If no object is passed, `this` refers to the global object. You can pass function parameters after the `this` reference.
+
+#### `Apply`:
+The `apply` method is similar to `call`, but it takes two arguments:
+1. The object to which `this` will refer.
+2. An array of parameters to be passed to the function.
+
+```javascript
+// Using apply to set `this` to newObj and passing arguments as an array
+myObj.greet.apply(newObj, ["Welcome", "Vrindavan"]);
+// Output: God Krishna Welcome to Vrindavan
+```
+
+#### `Bind`:
+The `bind` method is like `call` but does not invoke the function immediately. Instead, it creates a new function with `this` permanently bound to the specified value. You can call this new function later.
+
+```javascript
+// Create a new function with `this` bound to newObj and arguments pre-set
+const boundGreet = myObj.greet.bind(newObj, "Welcome", "Vrindavan");
+
+// Call the bound function
+boundGreet();
+// Output: God Krishna Welcome to Vrindavan
+```
+
+#### **Note**: 
+Arrow functions do not work with `call`, `apply`, and `bind` as they do not have their own `this`. The `this` context of arrow functions is lexically scoped based on where the arrow function is defined.
