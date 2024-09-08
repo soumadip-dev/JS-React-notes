@@ -234,3 +234,44 @@ boundGreet();
 
 #### **Note**: 
 Arrow functions do not work with `call`, `apply`, and `bind` as they do not have their own `this`. The `this` context of arrow functions is lexically scoped based on where the arrow function is defined.
+
+### Prototype Inheritance (Function)
+
+We can achieve prototype inheritance using functions by linking the prototype of a child class to the prototype of a parent class. This can be done using:
+
+- `child.prototype.__proto__ = parent.prototype;`  
+- Alternatively, `Object.create()` can be used to achieve the same.
+
+In classes, we use the `super` keyword to call the constructor of the parent class. However, in functions, there is no `super` keyword. Instead, we can use the `call()` function to achieve the same functionality by explicitly calling the parent constructor inside the child function.
+
+#### Example:
+
+```JavaScript
+// Parent constructor function: Event
+function Event(name, date) {
+  this.name = name;
+  this.date = date;
+}
+
+// Adding a method to the parent prototype to describe the event
+Event.prototype.getDetails = function () {
+  return `Event: ${this.name} on ${this.date}`;
+};
+
+// Child constructor function: MovieEvent
+function MovieEvent(movieName, date) {
+  // Inherit properties from Event
+  Event.call(this, movieName, date);
+}
+
+// Link the child's prototype to the parent's prototype
+MovieEvent.prototype = Object.create(Event.prototype);
+// Another way
+// MovieEvent.prototype.__proto__ = Event.prototype;
+
+// Create an instance of MovieEvent
+let movieEvent = new MovieEvent("Inception", "25th September 2024");
+
+console.log(movieEvent.getDetails());
+// Output: Event: Inception on 25th September 2024
+```
