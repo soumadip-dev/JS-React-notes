@@ -283,3 +283,32 @@ console.log(newNumbers); // Prints [1, 2, 3, 4, 5]
 ```
 
 In this example, `...numbers` spreads the elements of the `numbers` array into the `newNumbers` array.
+
+---
+## Autoboxing and Unboxing
+In JavaScript, **autoboxing** and **unboxing** refer to the automatic conversion between primitive values (such as numbers, strings, and booleans) and their corresponding object types (such as `Number`, `String`, and `Boolean`).
+
+#### 1. **Autoboxing**:
+This is when JavaScript automatically converts a primitive value into its corresponding object wrapper class. This occurs when you try to access a method or property on a primitive value.
+
+Example:
+
+```js
+let str = "Hello";
+console.log(str.length); // Output: 5
+```
+
+In the above example, `"Hello"` is a primitive string. However, JavaScript automatically converts it into a `String` object (autoboxing) so that the `length` property can be accessed.
+
+#### 2. **Unboxing**:
+This is when JavaScript automatically converts an object wrapper back into its corresponding primitive value.
+
+Example:
+
+```js
+let numObj = new Number(10); // Object wrapper
+let result = numObj + 5;     // Unboxing happens here
+console.log(result);         // Output: 15
+```
+
+Here, the `Number` object is automatically unboxed to the primitive number when performing arithmetic with it.
