@@ -169,8 +169,6 @@ In JavaScript, when you try to access a variable, JavaScript looks for it in the
 
 If the variable isn't found in any of these scopes, you'll get a `ReferenceError`.
 
-**Example:**
-
 ```javascript
 let globalVar = 'I am global'; // Global scope
 
@@ -216,6 +214,92 @@ obj.outerFn();
 In this code, `this` inside the arrow function `innerFn` is not determined by the function itself. Instead, it inherits `this` from its surrounding scope, which is the `outerFn` method. Since `outerFn` is a regular function and `this` within it refers to the `obj` object, `innerFn` also uses `this` from the `obj` object. As a result, `console.log(this.x, this.y);` outputs `10 20`.
 
 ---
+
+### What is the purpose of the `static` keyword in JavaScript classes?
+
+The `static` keyword in JavaScript classes is used to define methods or properties that belong to the class itself, rather than to instances of the class. Static methods and properties can be accessed directly from the class, without needing to instantiate it.
+
+   ```javascript
+   class Product {
+     static getProductCategory() {
+       return "Electronics";
+     }
+
+     static discountRate = 0.1;
+
+     constructor(name, price) {
+       this.name = name;
+       this.price = price;
+       console.log(`Accessing the static property: ${Product.discountRate}`);
+     }
+   }
+
+   console.log(Product.getProductCategory()); // Output: "Electronics"
+   const product1 = new Product("Laptop", 1500);
+   ```
+   
+### What are `constructor functions`, and how do they work in JavaScript?
+In JavaScript, constructor functions are a way to create objects with a common structure and behavior. Before the introduction of the `class` keyword in ES6, constructor functions were commonly used to create object blueprints. When using the `new` keyword with a constructor function:
+
+1. A new object is created.
+2. The `this` context of the function is set to the newly created object.
+3. The function's properties and methods are attached to this new object.
+
+```javascript
+function Product(name, price, description) {
+  this.name = name;
+  this.price = price;
+  this.description = description;
+  this.displayProduct = function () {
+    console.log(
+      "Name:", this.name,
+      "Price:", this.price,
+      "Description:", this.description
+    );
+  };
+}
+
+let iphone = new Product("iPhone 11", 900, "Apple iPhone 11");
+iphone.displayProduct();
+// Output: Name: iPhone 11 Price: 900 Description: Apple iPhone 11
+```
+
+In this example, the `Product` constructor function is used to create a new `iphone` object with the specified properties and a method to display these properties.
+
+
+2. **What is Object-Oriented Programming (OOP)? How does JavaScript support it?**
+   - **Explanation:** Discuss the four main principles of OOP (Encapsulation, Inheritance, Polymorphism, and Abstraction) and how JavaScript implements them using objects, prototypes, and classes.
+
+3. **Explain the concept of "prototypal inheritance" in JavaScript. How does it differ from classical inheritance?**
+   - **Explanation:** Describe how JavaScript objects inherit properties from other objects via the prototype chain, as opposed to the class-based inheritance seen in languages like Java or C++.
+
+4. **What is the difference between `__proto__` and `prototype` in JavaScript?**
+   - **Explanation:** Clarify that `__proto__` is the actual object that is used in the lookup chain, while `prototype` is a property of a function object that is used when the function is used as a constructor with the `new` keyword.
+
+
+
+5. **How do you implement inheritance in JavaScript? Can you show an example using both ES5 (function-based) and ES6 (class-based) syntax?**
+   - **Explanation:** Provide an example of inheritance using constructor functions and the `Object.create` method for ES5, and classes and the `extends` keyword for ES6.
+
+6. **What is the significance of the `super` keyword in ES6 classes?**
+   - **Explanation:** Explain how `super` is used to call the constructor of a parent class or to access parent class methods in a derived class.
+
+7. **What is method overriding in JavaScript? How is it achieved?**
+   - **Explanation:** Describe how a subclass can provide a specific implementation of a method that is already defined in its parent class.
+
+8. **Can you explain the concept of encapsulation with an example in JavaScript?**
+   - **Explanation:** Discuss how encapsulation is implemented in JavaScript, often using closures or private fields (introduced in ES2022) to restrict direct access to an object's properties.
+
+9. **What is the purpose of the `static` keyword in JavaScript classes?**
+   - **Explanation:** Explain that `static` methods belong to the class itself rather than to instances of the class, and provide an example.
+
+10. **How would you implement polymorphism in JavaScript?**
+    - **Explanation:** Discuss method overloading (though not directly supported in JavaScript) and method overriding, and provide an example of how different classes can implement the same method in their own way.
+
+These questions cover various aspects of OOP in JavaScript and help assess your understanding of how JavaScript handles object-oriented principles.
+
+---
+
 ### Can you explain the difference between `==` and `===`?
 
 - The `==` operator is called the **equality operator**, while the `===` operator is called the **strict equality operator**.
