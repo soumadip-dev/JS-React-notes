@@ -10,13 +10,9 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 * [function](function.md)
 * [OOPS](oops.md)
 * [Prototype](prototype.md)
-* 
 
 
 
 
 ---
-
-
-
 * [Interview](Interview.md)
