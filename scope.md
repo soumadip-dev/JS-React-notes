@@ -7,10 +7,6 @@ JavaScript has four main pillars:
 3. **Async Programming**
 4. **Objects and Classes**
 
-#### Scopes in JavaScript
-- Scopes determine where variables or functions are accessible in the code.
-- JavaScript's scoping mechanism is different from other languages like Java, C++, and Python, so avoid mixing these concepts.
-
 ---
 
 **Note:** To fully understand scoping in JavaScript, it's essential to grasp the difference between compiled and interpreted languages:
@@ -20,13 +16,16 @@ JavaScript has four main pillars:
 - **Hybrid Languages (e.g., Java, JavaScript, Python):** These languages use both compilation and interpretation for code execution.
 
 ---
+
 ##### Nature of JavaScript
 
 JavaScript is a:
 
-- **High-level**: JavaScript is a high-level language, which means it abstracts away most of the complex details of the computer, such as memory management and hardware-specific operations. Developers do not have to manage resources manually; everything happens automatically. However, this abstraction may result in lower execution speed compared to lower-level languages.
-- **Garbage-collected**: JavaScript automatically handles memory allocation and deallocation through a process called garbage collection, which helps reduce the risk of memory leaks.
-- **Interpreted or Just-in-Time (JIT) compiled**: JavaScript code is either interpreted by the browser or compiled just-in-time. While many believe JavaScript is purely interpreted, this isn't entirely accurate. Here's why:
+- **High-level:** JavaScript is a high-level language, which means it abstracts away most of the complex details of the computer, such as memory management and hardware-specific operations. Developers do not have to manage resources manually; everything happens automatically. However, this abstraction may result in lower execution speed compared to lower-level languages.
+  
+- **Garbage-collected:** JavaScript automatically handles memory allocation and deallocation through a process called garbage collection, which helps reduce the risk of memory leaks.
+  
+- **Interpreted or Just-in-Time (JIT) compiled:** JavaScript code is either interpreted by the browser or compiled just-in-time. While many believe JavaScript is purely interpreted, this isn't entirely accurate. Here's why:
 
   ```javascript
   console.log("wow wow"); 
@@ -34,18 +33,69 @@ JavaScript is a:
     let r = uy; 
   }
   ```
+
   In the example above, the code throws an error without executing `console.log`, showing that JavaScript analyzes the code before starting execution.
-- **Multi-paradigm**: JavaScript supports multiple programming paradigms, including *procedural*, *object-oriented*, and *functional programming*, offering developers flexibility in how they write code.
-- **Prototype-based object-oriented**: JavaScript is prototype-based, meaning it uses prototypes for inheritance. Objects in JavaScript can inherit properties directly from other objects.
-- **First-class functions**: In JavaScript, functions are first-class citizens. This means they can be treated as variables, passed into other functions, and returned from other functions.
-- **Dynamic**: JavaScript is a dynamic language, meaning that types are determined at runtime. This offers flexibility but requires careful handling to avoid errors.
-- **Single-threaded with an Event Loop concurrency model**: JavaScript operates in a single-threaded environment, executing one command at a time. It uses an event loop to manage concurrency, allowing it to handle asynchronous tasks without multithreading. This enables JavaScript to perform non-blocking operations and manage multiple tasks simultaneously.
+  
+- **Multi-paradigm:** JavaScript supports multiple programming paradigms, including *procedural*, *object-oriented*, and *functional programming*, offering developers flexibility in how they write code.
+  
+- **Prototype-based object-oriented:** JavaScript is prototype-based, meaning it uses prototypes for inheritance. Objects in JavaScript can inherit properties directly from other objects.
+  
+- **First-class functions:** In JavaScript, functions are first-class citizens. This means they can be treated as variables, passed into other functions, and returned from other functions.
+  
+- **Dynamic:** JavaScript is a dynamic language, meaning that types are determined at runtime. This offers flexibility but requires careful handling to avoid errors.
+  
+- **Single-threaded with an Event Loop concurrency model:** JavaScript operates in a single-threaded environment, executing one command at a time. It uses an event loop to manage concurrency, allowing it to handle asynchronous tasks without multithreading. This enables JavaScript to perform non-blocking operations and manage multiple tasks simultaneously.
 
 ---
+
 ##### Phases of Execution in JavaScript
+
 JavaScript executes code in two distinct phases:
-1. **Compilation and Scope Resolution Phase:** During this phase, JavaScript determines the scope and visibility of each variable and function. This is known as **scope resolution**.
-2. **Interpretation or Execution Phase:** In this phase, the actual code execution takes place, with values assigned to the variables within the determined scopes.
+
+1. **Parsing:** This involves reading the code and converting it into a data structure called the _Abstract Syntax Tree (AST)_. This process breaks down each line of code into meaningful components for JavaScript and checks for syntax errors.
+   
+2. **Compilation and Scope Resolution:** In this phase, JavaScript determines the scope and visibility of each variable and function. This process is known as **scope resolution**.
+   
+3. **Interpretation or Execution:** During this phase, the actual execution of the code occurs, with values being assigned to variables within their respective scopes.
+
+---
+
+##### Execution Context
+
+An **execution context** is an abstract concept that holds information about the environment within which the JavaScript code is executed. Every time a script or function runs, an execution context is created, determining which variables, objects, and functions are accessible during the code's execution.
+
+###### Types of Execution Contexts:
+
+1. **Global Execution Context:** 
+   - This is the default or base context. When the JavaScript engine starts executing your code, it first creates the Global Execution Context. 
+   - Variables and functions that are not inside any function are placed in the Global Execution Context.
+   - There is only one Global Execution Context in any JavaScript program.
+   
+2. **Function Execution Context:** 
+   - Every time a function is called, a new Function Execution Context is created for that function.
+   - It contains the function’s own local variables, arguments object, `this` keyword, and more.
+   - A Function Execution Context is created whenever a function is invoked and can be nested within other execution contexts.
+
+3. **Eval Execution Context:** 
+   - Created when `eval()` is called.
+   - Generally avoided due to performance and security concerns.
+
+Each execution context has two stages:
+
+1. **Creation Phase:** 
+   - Memory is allocated for variables and functions, the scope chain is established, and the `this` keyword is defined (not in arrow functions).
+   - Hoisting occurs, meaning variables declared with `var` are set to `undefined`, and function declarations are loaded into memory.
+
+2. **Execution Phase:** 
+   - The code is executed line by line.
+   - Values are assigned to variables, and functions are executed.
+
+---
+
+#### Scopes in JavaScript
+
+- Scopes determine where variables or functions are accessible in the code.
+- JavaScript's scoping mechanism is different from other languages like Java, C++, and Python, so avoid mixing these concepts.
 
 ##### Types of Scope in JavaScript
 
