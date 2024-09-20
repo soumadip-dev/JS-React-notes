@@ -13,27 +13,35 @@ JavaScript has four main pillars:
 
 ---
 
-| **Note:** To fully understand scoping in JavaScript, it's essential to grasp the difference between compiled and interpreted languages:
+**Note:** To fully understand scoping in JavaScript, it's essential to grasp the difference between compiled and interpreted languages:
 
 - **Compiled Languages (e.g., C, C++):** Code is analyzed and compiled into an executable binary by a compiler. Errors must be fixed before any code is executed.
 - **Interpreted Languages (e.g., Bash):** Code is executed line by line. If an error occurs, execution stops at the error.
 - **Hybrid Languages (e.g., Java, JavaScript, Python):** These languages use both compilation and interpretation for code execution.
 
 ---
-
 ##### Nature of JavaScript
 
-JavaScript combines the processes of compilation and interpretation. Many people think it is interpreted only, but that's not true. Here's why:
+JavaScript is a:
 
-```javascript
-console.log("wow wow"); 
-function fun() { 
-  let r = uy; 
-}
-```
+- **High-level**: JavaScript is a high-level language, which means it abstracts away most of the complex details of the computer, such as memory management and hardware-specific operations. Developers do not have to manage resources manually; everything happens automatically. However, this abstraction may result in lower execution speed compared to lower-level languages.
+- **Garbage-collected**: JavaScript automatically handles memory allocation and deallocation through a process called garbage collection, which helps reduce the risk of memory leaks.
+- **Interpreted or Just-in-Time (JIT) compiled**: JavaScript code is either interpreted by the browser or compiled just-in-time. While many believe JavaScript is purely interpreted, this isn't entirely accurate. Here's why:
 
-The above code throws an error without executing `console.log` and prints nothing on the console, simply displaying the error. This shows that JavaScript analyzes the code beforehand before starting execution.
+  ```javascript
+  console.log("wow wow"); 
+  function fun() { 
+    let r = uy; 
+  }
+  ```
+  In the example above, the code throws an error without executing `console.log`, showing that JavaScript analyzes the code before starting execution.
+- **Multi-paradigm**: JavaScript supports multiple programming paradigms, including *procedural*, *object-oriented*, and *functional programming*, offering developers flexibility in how they write code.
+- **Prototype-based object-oriented**: JavaScript is prototype-based, meaning it uses prototypes for inheritance. Objects in JavaScript can inherit properties directly from other objects.
+- **First-class functions**: In JavaScript, functions are first-class citizens. This means they can be treated as variables, passed into other functions, and returned from other functions.
+- **Dynamic**: JavaScript is a dynamic language, meaning that types are determined at runtime. This offers flexibility but requires careful handling to avoid errors.
+- **Single-threaded with an Event Loop concurrency model**: JavaScript operates in a single-threaded environment, executing one command at a time. It uses an event loop to manage concurrency, allowing it to handle asynchronous tasks without multithreading. This enables JavaScript to perform non-blocking operations and manage multiple tasks simultaneously.
 
+---
 ##### Phases of Execution in JavaScript
 JavaScript executes code in two distinct phases:
 1. **Compilation and Scope Resolution Phase:** During this phase, JavaScript determines the scope and visibility of each variable and function. This is known as **scope resolution**.
