@@ -94,8 +94,7 @@ Each execution context has two stages:
 
 #### Scopes in JavaScript
 
-- Scopes determine where variables or functions are accessible in the code.
-- JavaScript's scoping mechanism is different from other languages like Java, C++, and Python, so avoid mixing these concepts.
+Scopes determine where variables or functions are organized and accessible in the code. JavaScript's scoping mechanism is different from other languages like Java, C++, and Python, so avoid mixing these concepts.
 
 ##### Types of Scope in JavaScript
 
@@ -166,7 +165,7 @@ In JavaScript, variables can be declared using `var`, `let`, or `const`. The way
 - **LHS (Left-Hand Side):** When we assign a value or declare the variable.
 
 ##### Lexical Scoping / Lexical Parsing:
-JavaScript uses lexical scoping, also known as static scoping. In lexical scoping, scopes are allocated during compile time. So, in JavaScript, values for variables are assigned in the execution phase, but the scope of the variable is decided during the compilation phase.
+JavaScript uses lexical scoping, also known as static scoping. In lexical scoping, the scope of variables is determined during compile time. Although variable values are assigned during the execution phase, the scope of each variable is defined during the compilation phase. Therefore, the rules for accessing variables are based on the location where functions and blocks are written in the code.
 
 Example:
 ```javascript
@@ -315,9 +314,9 @@ These keywords support block scope, meaning variables declared inside a block ar
 
 ### Hoisting
 
-**Hoisting** is a term commonly used in the JavaScript community, although it is not officially defined in the ECMAScript specification. It is a consequence of JavaScript's scoping mechanism, which involves two main phases of code execution: the **Compilation and Scope Resolution Phase** and the **Interpretation or Execution Phase**. During the compilation phase, many variables are already identified, so when the code is executed, it seems as though JavaScript is aware of these variables even before their actual declaration. This phenomenon, where the interpreter appears to move the declarations of functions, variables, classes, or imports to the top of their scope before execution, is known as **Hoisting**.
+**Hoisting** is a term commonly used in the JavaScript community, although it is not officially defined in the ECMAScript specification. It refers to a behavior in JavaScript's scoping mechanism, which occurs in two main phases of code execution: the **Compilation and Scope Resolution Phase** and the **Interpretation or Execution Phase**. During the compilation phase, many variables are already identified, so when the code is executed, it seems as  JavaScript is aware of these variables or function even before their actual declaration. This phenomenon, where the interpreter appears to move the declarations of functions, variables, classes, or imports to the top of their scope before execution, is known as **hoisting**.
 
-Here’s an example of hoisting with `var`:
+- **Example of Hoisting with `var`:**
 
 ```javascript
 function hoistVar() {
@@ -328,3 +327,21 @@ function hoistVar() {
 
 hoistVar();
 ```
+
+In this example, the variable `a` is hoisted, but its value is not assigned until the line `var a = 90;`. Therefore, the first `console.log(a);` outputs `undefined`.
+
+- **Example of Hoisting with a `Function Declaration`:**
+
+```javascript
+console.log(addNum(2, 3)); // 5
+
+function addNum(a, b) {
+    return a + b;
+}
+```
+
+In this example, the function `addNum` is fully hoisted, allowing it to be called before its declaration in the code.
+
+- **Hoisting with `Function Expressions`:**
+
+If a function expression is created using `const` or `let`, the function will not be hoisted. If a function expression is created using `var`, it will be hoisted but will store `undefined`. If you try to call the function before its definition, it will throw an error, stating that the function is `not a function`, because the code attempts to call `undefined()`.
