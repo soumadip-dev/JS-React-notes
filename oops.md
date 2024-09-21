@@ -52,6 +52,29 @@ obj.outerFn();
 
 In this code, `this` inside the arrow function `innerFn` is not determined by the function itself. Instead, it inherits `this` from its surrounding scope, which is the `outerFn` method. Since `outerFn` is a regular function and `this` within it refers to the `obj` object, `innerFn` also uses `this` from the `obj` object. As a result, `console.log(this.x, this.y);` outputs `10 20`.
 
+**Note**: The `this` keyword does not point to the object where the method is created; it points to the object that is calling the method.
+
+```javascript
+const ram = {
+  year: 1991,
+  name: 'Ram',
+  calcAge: function () {
+    console.log(`Age of ${this.name} is ${2037 - this.year}`);
+  },
+};
+
+const sam = {
+  year: 1992,
+  name: 'Sam',
+};
+
+ram.calcAge(); // Output: Age of Ram is 46 (this pointing to ram object)
+sam.calcAge = ram.calcAge; // This is called object borrowing
+sam.calcAge(); // Output: Age of Sam is 45 (this pointing to sam object)
+```
+
+In the above code, when `ram.calcAge()` is called, `this` refers to the `ram` object. But when `sam.calcAge()` is called after borrowing the method from `ram`, `this` refers to the `sam` object.
+
 ### Encapsulation and Data Security in JavaScript Classes
 In JavaScript, classes do not inherently protect data members from being accessed or modified outside the class, which can violate the principle of encapsulation in Object-Oriented Programming (OOP). To enforce data security and encapsulation, data members can be made private by prefixing them with a `#`, restricting their access to within the class.
 
