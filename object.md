@@ -115,16 +115,6 @@ console.log(Object.isSealed(product));  // true
 
 If an object is sealed but not frozen:
 
-```javascript
-const x = { a: 10 };
-Object.seal(x);
-
-console.log(Object.isFrozen(x));  // false
-console.log(Object.isSealed(x));  // true
-```
-
-If an object is neither sealed nor frozen, both methods return `false`.
-
 ### `Object.defineProperty()`
 This method allows fine control over object properties, making them writable or configurable.
 
@@ -156,6 +146,33 @@ function customFreeze(obj) {
 }
 ```
 
+
+### `Object.assign()` in JavaScript
+
+`Object.assign()` is a built-in JavaScript method used to copy properties from one or more source objects to a target object. It returns the target object after copying. The target object and the source object will reside at different locations in the heap memory, so changes made to the target object will not affect the source object. If the target object has properties with the same keys as those in the source object, the source properties will overwrite the target's.
+
+- **target**: The object to which properties will be copied.
+- **sources**: One or more source objects whose properties you want to copy to the target.
+
+**Example:**
+```javascript
+const target = { a: 1 };
+const source = { b: 2, c: 3 };
+Object.assign(target, source);
+console.log(target); // Output: { a: 1, b: 2, c: 3 }
+```
+
+#### Important Consideration:
+`Object.assign()` performs a **shallow copy**, not a deep copy. This means that if the source object contains nested objects or arrays, those inner objects or arrays will still reference the same memory location as in the source object.
+
+**Example:**
+```javascript
+const target = { a: 1 };
+const source = { b: 2, c: 3, d: [5, 6] };
+Object.assign(target, source);
+target.d.push(7);
+console.log(source.d); // Output: [5, 6, 7] --> The source object’s array is also modified
+```
 
 ---
 ## Object Destructuring
