@@ -296,3 +296,24 @@ button.addEventListener('click', function() {
 Arrow functions do not work with `call`, `apply`, and `bind` as they do not have their own `this`. The `this` context of arrow functions is lexically scoped based on where the arrow function is defined.
 
 --- 
+
+### Closures
+A `closure` provides access to the variables of its parent function even after that parent function has returned. The function keeps a reference to its outer scope, preserving the scope chain over time. This means that the variable environment of the execution context in which the function was created remains accessible even after that execution context has finished.
+
+**Example**:
+```JavaScript
+const secureBooking = function() {
+    let passengerCount = 0;
+    return function() {
+        passengerCount++;
+        console.log(`${passengerCount} passengers`);
+    }
+}
+
+const booker = secureBooking();
+
+booker(); // 1 passengers
+booker(); // 2 passengers
+booker(); // 3 passengers
+```
+This example demonstrates how the inner function retains access to `passengerCount`, even after `secureBooking` has completed its execution.
