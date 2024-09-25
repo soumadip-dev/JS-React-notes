@@ -193,24 +193,27 @@ console.log(radius.map(area)); // [3.141592653589793, 12.566370614359172]
 
 ---
 
-### Notes on `map`, `filter`, and `reduce`
+### Data Transformation with `map()`, `filter()`, and `reduce()`
 
-- **`map`:** Applies a given function to each element of an array, returning a new array with the results.
-
+JavaScript provides powerful array methods for transforming and processing data, with three key methods being `map()`, `filter()`, and `reduce()`. These methods enable efficient and readable manipulation of arrays.
+### Example Array:
 ```javascript
-const doubled = radius.map(r => r * 2); // [2, 4]
+const numbers = [1, 2, 3, 4, 5];
 ```
-
-- **`filter`:** Creates a new array with all elements that pass a test implemented by the provided function.
-
+### 1. **`map()`**: 
+Applies a given function to each element of an array, returning a new array with the transformed values.
 ```javascript
-const greaterThanOne = radius.filter(r => r > 1); // [2]
+const doubled = numbers.map(n => n * 2); // [2, 4, 6, 8, 10]
 ```
-
-- **`reduce`:** Executes a reducer function (that you provide) on each element of the array, resulting in a single output value. Here, `acc` is the accumulator and `r` is the current value. `r` represents each value in the array, and `acc` represents the final result. The second argument of the `reduce` function is the initial value of `acc`.
-
+### 2. **`filter()`**: 
+Creates a new array containing only the elements that satisfy the provided condition.
 ```javascript
-const sum = radius.reduce((acc, r) => acc + r, 0); // 3
+const greaterThanTwo = numbers.filter(n => n > 2); // [3, 4, 5]
+```
+### 3. **`reduce()`**: 
+Executes a reducer function (that you provide) on each element of the array, resulting in a single output value. Here, `acc` is the accumulator and `r` is the current value. `r` represents each value in the array, and `acc` represents the final result. The second argument of the `reduce` function is the initial value of `acc`.
+```javascript
+const sum = numbers.reduce((acc, n) => acc + n, 0); // 15
 ```
 
 ---
