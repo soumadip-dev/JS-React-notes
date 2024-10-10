@@ -75,6 +75,87 @@ sam.calcAge(); // Output: Age of Sam is 45 (this pointing to sam object)
 
 In the above code, when `ram.calcAge()` is called, `this` refers to the `ram` object. But when `sam.calcAge()` is called after borrowing the method from `ram`, `this` refers to the `sam` object.
 
+
+#### `call`, `apply`, and `bind` Methods
+
+In JavaScript, `call`, `apply`, and `bind` are three very useful methods that allow you to control the value of the `this` keyword within a function.
+
+##### `call`:
+The `call` method allows you to explicitly set the value of `this` inside a function. It invokes the function with a specific `this` context and passes arguments individually.
+
+```javascript
+const myObj = {
+    name: "Ram",
+    greet: function(welcomeMessage, location) {
+        console.log(`God ${this.name} ${welcomeMessage} to ${location}`);
+    }
+}
+```
+
+If you call `myObj.greet()`, `this` refers to `myObj`, so the name will be "Ram". To set `this` to another object, you can use the `call` method.
+
+```javascript
+const newObj = {
+    name: "Krishna"
+}
+
+// Using call to set `this` to newObj and passing two arguments
+myObj.greet.call(newObj, "Welcome", "Vrindavan"); 
+// Output: God Krishna Welcome to Vrindavan
+```
+
+The `call` method allows us to pass the first argument as the new `this` context. If no object is passed, `this` refers to the global object. You can pass function parameters after the `this` reference.
+
+##### `apply`:
+The `apply` method is similar to `call`, but it takes two arguments:
+1. The object to which `this` will refer.
+2. An array of parameters to be passed to the function.
+
+```javascript
+// Using apply to set `this` to newObj and passing arguments as an array
+myObj.greet.apply(newObj, ["Welcome", "Vrindavan"]);
+// Output: God Krishna Welcome to Vrindavan
+```
+
+##### `bind`
+
+The `bind` method is similar to `call`, but it does not invoke the function immediately. Instead, it creates a new function with `this` permanently bound to the specified value, allowing you to call this new function later.
+
+```javascript
+// Create a new function with `this` bound to newObj 
+const boundGreet = myObj.greet.bind(newObj);
+
+// Another bound function with one pre-set argument
+const boundGreet2 = myObj.greet.bind(newObj, "came");
+
+// Call the bound functions
+boundGreet("Welcome", "Vrindavan"); // Output: God Krishna welcomes you to Vrindavan
+boundGreet2("Dwarka Nagri"); // Output: God Krishna came to Dwarka Nagri
+```
+
+We also use `bind` in situations where we want to call a method of an object that relies on `this`, especially from an event listener. If we call the method directly, `this` will refer to the element to which the event listener is attached.
+
+```javascript
+const button = document.querySelector("button"); // Suppose a button in HTML
+const myObj = {
+    name: "God Krishna",
+    greet: function(location) {
+        console.log(`${this.name} welcomes you to ${location}`);
+    }
+};
+
+// button.addEventListener("click", myObj.greet); 
+// This will throw an error because `this` points to the button element.
+
+// Solution using bind
+const boundGreetButton = myObj.greet.bind(myObj); // Bind the greet method to myObj
+button.addEventListener('click', function() {
+    boundGreetButton('Vrindavan');
+}); // Output: God Krishna welcomes you to Vrindavan
+```
+##### **Note**: 
+Arrow functions do not work with `call`, `apply`, and `bind` as they do not have their own `this`. The `this` context of arrow functions is lexically scoped based on where the arrow function is defined.
+
 ### Encapsulation and Data Security in JavaScript Classes
 In JavaScript, classes do not inherently protect data members from being accessed or modified outside the class, which can violate the principle of encapsulation in Object-Oriented Programming (OOP). To enforce data security and encapsulation, data members can be made private by prefixing them with a `#`, restricting their access to within the class.
 
