@@ -15,4 +15,4 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 
 
 ---
-* [Interview](Interview.md)
+* [Interview Note](Interview.md)
