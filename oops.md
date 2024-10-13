@@ -231,7 +231,8 @@ console.log("2nd Output:", Product.prototype.constructor);
 
 Finally, JavaScript links the class or function's prototype to **`Object.prototype`**.
 
-![[prototype.png]]
+![Prototype Image](/Images/prototype.png)
+
 
 ---
 
@@ -347,7 +348,31 @@ const product1 = new Product("Laptop", 1500);
 ---
 
 ### Encapsulation and Data Security in JavaScript Classes
-In JavaScript, classes do not inherently protect data members from being accessed or modified outside the class, which can violate the principle of encapsulation in Object-Oriented Programming (OOP). To enforce data security and encapsulation, data members can be made private by prefixing them with a `#`, restricting their access to within the class.
+
+In JavaScript, classes do not inherently protect data members from being accessed or modified outside of the class, which can violate the principle of encapsulation in Object-Oriented Programming (OOP).
+
+#### Protected Fields
+
+While JavaScript doesn’t provide true `protected` fields, a common convention is to prefix a field with an underscore (`_`) to indicate that it should be treated as "protected." Although this convention doesn’t enforce actual protection, it serves as a visual reminder for developers to avoid accessing or modifying these fields outside the class or its subclasses.
+
+```javascript
+class Product {
+  _name;
+  _price;
+  _description;
+
+  displayProduct() {
+    console.log(this._name, this._price, this._description); // Intended for internal use
+  }
+}
+
+const item = new Product();
+item._name = "Book"; // Still accessible outside the class, no true protection
+```
+
+#### Private Fields
+
+To achieve genuine encapsulation and restrict access to within the class, JavaScript provides private fields. Private fields begin with a `#`, restricting access exclusively to the class itself, thereby ensuring true encapsulation.
 
 ```javascript
 class Product {
@@ -359,7 +384,12 @@ class Product {
     console.log(this.#name, this.#price, this.#description); // Accessible inside the class
   }
 }
+
+const item = new Product();
+item.#name = "Book"; // Error: Private field '#name' must be declared in an enclosing class
 ```
+
+By using private fields with the `#` prefix, JavaScript enforces data security and prevents accidental or unauthorized access from outside the class.
 
 ---
 
@@ -432,6 +462,7 @@ Prototype inheritance allows us to create a chain between parent and child class
 The main difference between these two methods is observed when accessing `child.prototype.constructor`. In the first method, it correctly refers to the child constructor function, while in the second method, it initially points to the parent constructor, and we need to manually set it back to the child.
 
 In ES6 classes, the `super` keyword is used to call the parent class’s constructor. However, in constructor functions, we can achieve a similar result by using `call()` to explicitly invoke the parent constructor within the child constructor.
+
 #### Example
 
 Here’s an example demonstrating prototype inheritance between a parent `Event` constructor and a child `MovieEvent` constructor:
@@ -473,7 +504,7 @@ console.log(movie.getDetails());
 
 In this example, `MovieEvent` inherits from `Event`, allowing instances of `MovieEvent` to access methods defined on `Event.prototype`, such as `getDetails()`.
 
-![[Inheritance_Constructor_function.png]]
+![Inheritance Constructor Function](/Images/Inheritance_Constructor_function.png)
 
 
 ---
@@ -531,6 +562,7 @@ In this example:
 - The `super()` keyword is used to call the parent class's constructor and initialize the type property.
 
 ![[Inheritance_ES6_class.png]]
+![Inheritance ES6 Class](/Images/Inheritance_ES6_class.png)
 
 ---
 
