@@ -231,7 +231,7 @@ console.log("2nd Output:", Product.prototype.constructor);
 
 Finally, JavaScript links the class or function's prototype to **`Object.prototype`**.
 
-![[prototype.jpg]]
+![[prototype.png]]
 
 ---
 
@@ -416,7 +416,69 @@ console.log(iphone.description); // Getter --> Prints "Something"
 
 ---
 
-### Prototype Inheritance (Class)
+### Prototype Inheritance with Constructor Functions
+
+Prototype inheritance allows us to create a chain between parent and child classes by linking their prototypes. When using constructor functions, we can achieve this linkage in two ways:
+
+1. **Using `__proto__` property**:
+   ```javascript
+   child.prototype.__proto__ = parent.prototype;
+   ```
+2. **Using `Object.create()`**:
+   ```javascript
+   child.prototype = Object.create(parent.prototype);
+   ```
+
+The main difference between these two methods is observed when accessing `child.prototype.constructor`. In the first method, it correctly refers to the child constructor function, while in the second method, it initially points to the parent constructor, and we need to manually set it back to the child.
+
+In ES6 classes, the `super` keyword is used to call the parent class’s constructor. However, in constructor functions, we can achieve a similar result by using `call()` to explicitly invoke the parent constructor within the child constructor.
+#### Example
+
+Here’s an example demonstrating prototype inheritance between a parent `Event` constructor and a child `MovieEvent` constructor:
+
+```javascript
+// Parent constructor function: Event
+function Event(name, date) {
+  this.name = name;
+  this.date = date;
+}
+
+// Adding a method to the parent prototype to describe the event
+Event.prototype.getDetails = function () {
+  return `Event: ${this.name} on ${this.date}`;
+};
+
+// Child constructor function: MovieEvent
+function MovieEvent(movieName, date) {
+  // Inherit properties from Event
+  Event.call(this, movieName, date); // Set 'this' in Event to reference 'this' in MovieEvent
+}
+
+// Link the child's prototype to the parent's prototype
+// Option 1: Using Object.create()
+MovieEvent.prototype = Object.create(Event.prototype);
+
+// Option 2: Using __proto__
+// MovieEvent.prototype.__proto__ = Event.prototype;
+
+// If using Object.create(), we need to reset the constructor property
+MovieEvent.prototype.constructor = MovieEvent;
+
+// Create an instance of MovieEvent
+const movie = new MovieEvent("Inception", "25th September 2024");
+
+console.log(movie.getDetails());
+// Output: Event: Inception on 25th September 2024
+```
+
+In this example, `MovieEvent` inherits from `Event`, allowing instances of `MovieEvent` to access methods defined on `Event.prototype`, such as `getDetails()`.
+
+![[Inheritance_Constructor_function.png]]
+
+
+---
+
+### Prototype Inheritance with ES6 Classes
 
 In JavaScript, prototype inheritance is a method by which objects inherit properties and methods from other objects. Here are the key points:
 Objects can inherit from other objects through a prototype chain. For example, a child object can inherit properties from a parent object via the prototype.
@@ -468,51 +530,7 @@ In this example:
 - They both have access to the `getInfo` method defined in `Event`.
 - The `super()` keyword is used to call the parent class's constructor and initialize the type property.
 
-![[protoInheritance.jpg]]
-
----
-
-### Prototype Inheritance (Function)
-
-We can achieve prototype inheritance using functions by linking the prototype of a child class to the prototype of a parent class. This can be done using:
-
-- `child.prototype.__proto__ = parent.prototype;`  
-- Alternatively, `Object.create()` can be used to achieve the same.
-
-In classes, we use the `super` keyword to call the constructor of the parent class. However, in functions, there is no `super` keyword. Instead, we can use the `call()` function to achieve the same functionality by explicitly calling the parent constructor inside the child function.
-
-#### Example:
-
-```JavaScript
-// Parent constructor function: Event
-function Event(name, date) {
-  this.name = name;
-  this.date = date;
-}
-
-// Adding a method to the parent prototype to describe the event
-Event.prototype.getDetails = function () {
-  return `Event: ${this.name} on ${this.date}`;
-};
-
-// Child constructor function: MovieEvent
-function MovieEvent(movieName, date) {
-  // Inherit properties from Event
-  Event.call(this, movieName, date);
-}
-
-// Link the child's prototype to the parent's prototype
-MovieEvent.prototype = Object.create(Event.prototype);
-// Another way
-// MovieEvent.prototype.__proto__ = Event.prototype;
-
-// Create an instance of MovieEvent
-let movieEvent = new MovieEvent("Inception", "25th September 2024");
-
-console.log(movieEvent.getDetails());
-// Output: Event: Inception on 25th September 2024
-```
-
+![[Inheritance_ES6_class.png]]
 
 ---
 
