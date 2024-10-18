@@ -1,161 +1,8 @@
-  ### Higher-Order Functions and Callbacks
-
-A `higher-order function` is a function that either takes another function as an argument, returns a new function, or both. The function used as an argument is called a `callback` function. By using higher-order functions, we can achieve a higher level of abstraction in our code, making it more modular and reusable.
-
-```javascript
-const radius = [1, 2];
-const area = function (radius) {
-    return Math.PI * radius * radius;
-};
-const circumference = function (radius) {
-    return 2 * Math.PI * radius;
-};
-const calculate = function (radius, logic) {
-    const output = [];
-    for (let i = 0; i < radius.length; i++) {
-        output.push(logic(radius[i]));
-    }
-    return output;
-};
-
-console.log(calculate(radius, area)); // [3.141592653589793, 12.566370614359172]
-console.log(calculate(radius, circumference)); // [6.283185307179586, 12.566370614359172]
-```
-
-- `map` is also a higher-order function in arrays. Instead of `calculate`, we can use the `map` function:
-
-```javascript
-console.log(radius.map(area)); // [3.141592653589793, 12.566370614359172]
-```
-
----
-
-### Data Transformation with `map()`, `filter()`, and `reduce()`
-
-JavaScript provides powerful array methods for transforming and processing data, with three key methods being `map()`, `filter()`, and `reduce()`. These methods enable efficient and readable manipulation of arrays.
-
-### Example Array:
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-```
-
-### 1. **`map()`**: 
-Applies a given function to each element of an array, returning a new array with the transformed values.
-```javascript
-const doubled = numbers.map(n => n * 2); // [2, 4, 6, 8, 10]
-```
-
-### 2. **`filter()`**: 
-Creates a new array containing only the elements that satisfy the provided condition.
-```javascript
-const greaterThanTwo = numbers.filter(n => n > 2); // [3, 4, 5]
-```
-
-### 3. **`reduce()`**: 
-Executes a reducer function (that you provide) on each element of the array, resulting in a single output value. Here, `acc` is the accumulator and `r` is the current value. `r` represents each value in the array, and `acc` represents the final result. The second argument of the `reduce` function is the initial value of `acc`.
-
-```javascript
-const sum = numbers.reduce((acc, n) => acc + n, 0); // 15
-```
-
----
-
-### Problem with Callbacks
-
-While callbacks are powerful and allow us to write modular, reusable code, they can sometimes lead to issues when used extensively. There are two main problems with callbacks:
-
-1. **Inversion of Control**: 
-   When we pass a callback function to another function, we give up control over when and how that callback is executed. The function receiving the callback may call it immediately, later, multiple times, or not at all. This can sometimes lead to unexpected behavior and make debugging more challenging.
-
-2. **Callback Hell** (also known as **Pyramid of Doom**): 
-   When callbacks are nested within other callbacks, especially for asynchronous operations, it can lead to deeply nested code that is difficult to read and maintain. This "pyramid" shape can make code harder to follow and increase the risk of errors.
-   
-   Here's an example of callback hell:
-   ```javascript
-   doFirstTask(() => {
-       doSecondTask(() => {
-           doThirdTask(() => {
-               doFourthTask(() => {
-                   // Final task
-               });
-           });
-       });
-   });
-   ```
-
----
-
-### Synchronous and Asynchronous Programming
-
-- In synchronous programming, tasks are executed one after another, and each task must complete before the next one begins. This is the default behavior of JavaScript.
-- In asynchronous programming, tasks can be initiated without waiting for previous tasks to complete. This allows for more efficient execution, especially in tasks that involve waiting, like network requests or timers.
-
-### What is the Default Nature of JavaScript?
-
-JavaScript is **synchronous by default**. This means that any native JavaScript code executes line by line, with each line needing to complete before the next one can begin. This synchronous nature is due to JavaScript being single-threaded.
-
-### Example of Asynchronous Code
-
-```javascript
-setTimeout(function f() {
-  console.log("Hello");
-}, 3000);
-
-console.log("End");
-```
-
-In this example, `setTimeout` is a higher-order function that delays the execution of `console.log("Hello")` by 3000 milliseconds (3 seconds). However, the code after `setTimeout`, `console.log("End");`, executes immediately.
-
-**Important Points**:
-
-- `setTimeout` is not a native JavaScript function; it is provided by the runtime environment (e.g., Node.js, Deno, or web browsers like Chrome, Edge, etc.).
-- Similarly, `console.log()` is also provided by the runtime environment, not by JavaScript itself.
-- If you pass `0` as the delay time in `setTimeout`, `Node.js` automatically sets it to 1 millisecond. Setting a delay of `0` is not actually possible in `Node.js`.
-
----
-
-### How Does JavaScript Handle Runtime Code?
-
-JavaScript manages runtime code using the **event loop** and **queues** (like the macro task queue and micro task queue). Here's a simplified explanation:
-
-1. **Call Stack**: JavaScript has a call stack where it keeps track of the function calls. If a task in the code is related to the runtime environment (like `setTimeout`), JavaScript sends it to the runtime environment and moves on to the next line of code.
-2. **Event Loop**: The event loop continuously checks if the call stack is empty. If the call stack is empty and there are tasks waiting in the queue (like a completed `setTimeout`), the event loop moves the task from the queue to the call stack for execution.
-3. **Queues**: If a runtime task completes while the call stack is not empty, the runtime environment places the completed tasks into the `Macro-task queue`. The tasks in these queues are processed in a **First-Come, First-Served (FCFS)** order when the call stack is empty.
-
-In summary, the event loop ensures that tasks are executed efficiently, even when asynchronous operations are involved.
-
----
-
-### Closures
-
-A `closure` provides access to the variables of its parent function even after that parent function has returned. The function keeps a reference to its outer scope, preserving the scope chain over time. This means that the variable environment of the execution context in which the function was created remains accessible even after that execution context has finished.
-
-**Example**:
-```javascript
-const secureBooking = function() {
-    let passengerCount = 0;
-    return function() {
-        passengerCount++;
-        console.log(`${passengerCount} passengers`);
-    };
-};
-
-const booker = secureBooking();
-
-booker(); // 1 passengers
-booker(); // 2 passengers
-booker(); // 3 passengers
-```
-
-This example demonstrates how the inner function retains access to `passengerCount`, even after `secureBooking` has completed its execution.
-
----
-
 ## What are Promises?
 
 Promises are a significant improvement over callbacks, offering a more structured and readable way to manage asynchronous operations. They are special JavaScript objects designed to handle tasks that are expected to complete in the future, such as downloading data or setting a timer.
 
-**Focus Points**:
+**Focus Points:**
 1. `How to create a promise.`
 2. `How to consume a promise.`
 
@@ -165,8 +12,8 @@ Promises are a significant improvement over callbacks, offering a more structure
 
 - In JavaScript, a promise can be created using the `Promise` constructor. To do this, you call `Promise` with the `new` keyword and pass in a required parameter, resulting in a promise object.
 - This constructor accepts a callback function as an argument, known as the `executor callback`.
-- It is called the `executor callback` because it is executed immediately by the `Promise` constructor when the promise object is created.
-- Our responsibility is to define this `callback` function, which handles the asynchronous task. The `Promise` constructor takes responsibility for executing this callback.
+- It is called the `executor callback` because it is executed immediately by the `Promise` constructor when the promise object is created. 
+- Our responsibility is to define this `callback` function, which handles the asynchronous task.The `Promise` constructor takes responsibility for executing this callback.
 - The callback function accepts two parameters: `resolve` and `reject`, which are functions provided by the `Promise` constructor.
 
 ```javascript
@@ -186,7 +33,7 @@ A promise object contains:
 - **Status**: The current state of the promise.
 - **Value**: The result of the promise.
 - **OnfulFillment** [Hidden]
-- **OnRejected** [Hidden]
+- **OnRejected**[Hidden]
 
 #### Promise Status
 
@@ -207,7 +54,7 @@ The promise object also contains a value, referred to as the "promise result." T
 - If the promise is **fulfilled**, the value is the result of the successful operation.
 - If the promise is **rejected**, the value is the error or reason for the failure.
 
-#### Example of a Promise
+##### Example of a Promise
 
 ```javascript
 const pr = new Promise((resolve, reject) => {
@@ -235,7 +82,7 @@ Promise {<pending>}
 Promise {<rejected>: 13}
 ```
 
-### OnFulfillment and OnRejected
+#### OnFulfillment and OnRejected
 
 - These are internal arrays managed by the promise object, initially empty.
 - Functions can be stored in these arrays using the `.then()` or `.catch()` methods on the promise object.
@@ -265,60 +112,113 @@ pr.then(onFulfillmentFunction, onRejectedFunction);
 ```
 
 - **Promise Resolution Process**  
-  - If the promise is fulfilled (successful), the functions passed as `onFulfillment` are executed.
-  - If the promise is rejected (failed), the functions passed as `onRejected` are executed.
-  - If there's any task waiting in the runtime environment, it will be stored in the `macrotask queue`.
-  - Functions related to the promise's outcome (either success or failure) are stored in the `microtask queue`.
-  - The `microtask queue` has higher priority, so it runs before the `macrotask queue` once the call stack is empty.
+- If the promise is fulfilled (successful), the functions passed as `onFulfillment` are executed.
+- If the promise is rejected (failed), the functions passed as `onRejected` are executed.
+- If there are any tasks waiting in the runtime environment, they will be stored in the **macrotask queue**.
+- Functions related to the promise's outcome (either success or failure) are stored in the **microtask queue**.
+- The **microtask queue** has higher priority, so it runs before the **macro-task queue** once the call stack is empty.
 
-- **Example Code**  
-  Here's an example to illustrate how promises work in conjunction with other asynchronous code:
+### **Example Code**  
+Here’s an example to illustrate how promises work in conjunction with other asynchronous code:
 
-  ```javascript
-  console.log("Execution Start");
+```javascript
+// Create a promise that resolves after 500 ms
+const promiseOne = new Promise(function executor1(resolve, reject) {
+  console.log('Executor callback triggered by Promise constructor: promiseOne');
+  
+  setTimeout(function c1() {
+    console.log('Timer of promiseOne done');
+    resolve(100); // pending -> fulfilled; undefined -> 100
+  }, 500);
+});
 
-  setTimeout(() => {
-    console.log("First Timer Completed");
-  }, 5000);
-
-  const generateRandomNumberPromise = new Promise((resolve, reject) => {
-    console.log("Promise Execution Started");
-
-    setTimeout(() => {
-      const randomNumber = Math.floor(Math.random() * 100);
-      console.log(`Generated Number: ${randomNumber}`);
-
-      if (randomNumber % 2 === 0) {
-        resolve("Even number");
-      } else {
-        reject("Odd number");
-      }
-    }, 100);
-  });
-
-  generateRandomNumberPromise.then(
-    () => console.log("Even number handler executed"),
-    () => console.log("Odd number handler executed")
-  );
-
-  generateRandomNumberPromise.then(
-    () => console.log("Success handler executed"),
-    () => console.log("Failure handler executed")
-  );
-
-  // Simulate a long-running process
-  for (let i = 0; i < 1000000000; i++) {
-    // Simulating an intensive task
+// Handling the resolved or rejected value of promiseOne
+promiseOne.then(
+  function onSuccess() {
+    console.log('onSuccess');
+  },
+  function onFailure() {
+    console.log('onFailure');
   }
+);
 
-  console.log("Execution End");
-  ```
+// Timer callback function for a separate 2-second timer
+setTimeout(function timerCallback() {
+  console.log('Timer 1 done');
+}, 2000); // Timer of 2 seconds
 
-In this code, you can observe the following:
-- The `Promise Execution Started` message is logged immediately after `Execution Start`.
-- The `Generated Number` and either `Even number` or `Odd number` are logged after a short delay.
-- The promise's `.then()` handlers execute based on the resolved or rejected state of the promise.
-- Despite the long-running `for` loop, the promise's resolution handlers (`.then()` callbacks) execute before the loop completes, demonstrating the priority of the microtask queue over the `macrotask` queue.
+// Create another promise that resolves or rejects based on a random number
+const promiseTwo = new Promise(function executor2(resolve, reject) {
+  console.log('Executor callback triggered by Promise constructor: promiseTwo');
+  
+  setTimeout(function promiseCallback() {
+    const randomNumber = Math.floor(Math.random() * 100);
+    console.log(randomNumber);
+    
+    if (randomNumber % 2 === 0) {
+      resolve(randomNumber); // even number, resolve promise
+    } else {
+      reject(randomNumber); // odd number, reject promise
+    }
+  }, 3000);
+});
+
+// Handling the resolved or rejected value of promiseTwo
+promiseTwo.then(
+  function onSuccess(value) {
+    console.log('Executing onSuccess for promiseTwo:', value);
+  },
+  function onFailure(value) {
+    console.log('Executing onFailure for promiseTwo:', value);
+  }
+);
+
+// Long-running synchronous task (not recommended in practice)
+for (let i = 0; i < 1000000000; i++) {}
+```
+
+### **Output:**
+```
+Execution Start
+Executor callback triggered by Promise constructor: promiseOne
+Executor callback triggered by Promise constructor: promiseTwo
+Timer of promiseOne done
+onSuccess
+Timer 1 done
+86
+Executing onSuccess for promiseTwo: 86
+```
+
+#### **Explanation:**
+
+In this code, we can observe the following sequence of events:
+
+- **promiseOne** is created by invoking the Promise constructor, which calls the `executor1` callback. It logs "Executor callback triggered by Promise constructor: promiseOne" (Output -> 1).
+- A 500 ms timer is set for the `c1` callback. Since nothing else remains in `executor1`, it is removed from the call stack.
+- The status of **promiseOne** is now "Pending," and its value is `undefined`.
+- The `.then()` callbacks are registered for **promiseOne**:  
+  - The `onSuccess` function is added to the fulfillment array of **promiseOne**.
+  - The `onFailure` function is added to the rejection array of **promiseOne**.
+- A separate 2-second timer is set to trigger `timerCallback` after 2000 ms.
+- **promiseTwo** is created by calling a new Promise constructor, which is added to the call stack and invokes the `executor2` callback. It logs "Executor callback triggered by Promise constructor: promiseTwo" (Output -> 2).
+- A 3-second timer is set for `promiseCallback`, which will either resolve or reject **promiseTwo** based on a random number. Since there is nothing more to do in the `executor2` callback, it is removed from the call stack.
+- The status of **promiseTwo** is now "Pending," and its value is `undefined`.
+- The `.then()` callbacks are registered for **promiseTwo**:  
+  - The `onSuccess` function is added to the fulfillment array of **promiseTwo**.
+  - The `onFailure` function is added to the rejection array of **promiseTwo**.
+- A long loop runs for 1 billion iterations, blocking the event loop.
+- In the background, the timer function for **promiseOne** completes first, adding `c1` to the macrotask queue. This is followed by the second timer adding `timerCallback`, and finally, the timer for **promiseTwo** completes, adding `promiseCallback` to the macrotask queue.
+- After some time, the loop finishes, and the call stack becomes empty.
+- The event loop checks if there is anything in the microtask queue. If none is found, it checks the macrotask queue. It finds the `c1` callback, moves it to the call stack, and executes it.
+- `c1` first logs "Timer of promiseOne done" (Output -> 3) and resolves **promiseOne** with a value of 100. Now, the status of **promiseOne** is "fulfilled," and the `onSuccess` function from the fulfillment array is shifted to the microtask queue. After that, `c1` is removed from the call stack.
+- The event loop now finds tasks in both the microtask and macrotask queues, but it prioritizes the microtask queue over the macrotask queue.
+- It takes the `onSuccess` function from the microtask queue and executes it, logging "onSuccess" (Output -> 4).
+- With nothing left in the microtask queue, the event loop checks the macrotask queue, finds `timerCallback`, and executes it, logging "Timer 1 done" (Output -> 5).
+- It then finds `promiseCallback` in the macrotask queue and executes it. It first generates a random number and logs it:
+  `randomnum` (Output -> 6).  
+  Then it resolves or rejects the promise based on the random number.
+  - If the random number is even, it resolves the promise and shifts the `onSuccess` function from the fulfillment array to the microtask queue, executing it and logging: "Executing onSuccess for promiseTwo: randomnum" (Output -> 7).
+  - If the number is odd, it rejects the promise and logs: "Executing onFailure for promiseTwo: randomnum" (Output -> 7).
 
 ---
 
@@ -408,3 +308,4 @@ In this code, you can observe the following:
   In the above example, each `.then()` receives the result of the previous one and performs an operation on it, passing the new value to the next `.then()`.
 
 ---
+
