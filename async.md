@@ -1,3 +1,44 @@
+### Synchronous and Asynchronous Programming
+
+- In synchronous programming, tasks are executed one after another, and each task must complete before the next one begins. This is the default behavior of JavaScript.
+- In asynchronous programming, tasks can be initiated without waiting for previous tasks to complete. This allows for more efficient execution, especially in tasks that involve waiting, like network requests or timers.
+
+### What is the Default Nature of JavaScript?
+
+JavaScript is **synchronous by default**. This means that any native JavaScript code executes line by line, with each line needing to complete before the next one can begin. This synchronous nature is due to JavaScript being single-threaded.
+
+### Example of Asynchronous Code
+
+```javascript
+setTimeout(function f() {
+  console.log("Hello");
+}, 3000);
+
+console.log("End");
+```
+
+In this example, `setTimeout` is a higher-order function that delays the execution of `console.log("Hello")` by 3000 milliseconds (3 seconds). However, the code after `setTimeout`, `console.log("End");`, executes immediately.
+
+**Important Points**:
+
+- `setTimeout` is not a native JavaScript function; it is provided by the runtime environment (e.g., Node.js, Deno, or web browsers like Chrome, Edge, etc.).
+- Similarly, `console.log()` is also provided by the runtime environment, not by JavaScript itself.
+- If you pass `0` as the delay time in `setTimeout`, `Node.js` automatically sets it to 1 millisecond. Setting a delay of `0` is not actually possible in `Node.js`.
+
+---
+
+### How Does JavaScript Handle Runtime Code?
+
+JavaScript manages runtime code using the **event loop** and **queues** (like the macro task queue and micro task queue). Here's a simplified explanation:
+
+1. **Call Stack**: JavaScript has a call stack where it keeps track of the function calls. If a task in the code is related to the runtime environment (like `setTimeout`), JavaScript sends it to the runtime environment and moves on to the next line of code.
+2. **Event Loop**: The event loop continuously checks if the call stack is empty. If the call stack is empty and there are tasks waiting in the queue (like a completed `setTimeout`), the event loop moves the task from the queue to the call stack for execution.
+3. **Queues**: If a runtime task completes while the call stack is not empty, the runtime environment places the completed tasks into the `Macro-task queue`. The tasks in these queues are processed in a **First-Come, First-Served (FCFS)** order when the call stack is empty.
+
+In summary, the event loop ensures that tasks are executed efficiently, even when asynchronous operations are involved.
+
+---
+
 ### Higher-Order Functions and Callbacks
 
 A `higher-order function` is a function that either takes another function as an argument, returns a new function, or both. The function used as an argument is called a `callback` function. By using higher-order functions, we can achieve a higher level of abstraction in our code, making it more modular and reusable.
@@ -85,47 +126,6 @@ While callbacks are powerful and allow us to write modular, reusable code, they 
 
 ---
 
-### Synchronous and Asynchronous Programming
-
-- In synchronous programming, tasks are executed one after another, and each task must complete before the next one begins. This is the default behavior of JavaScript.
-- In asynchronous programming, tasks can be initiated without waiting for previous tasks to complete. This allows for more efficient execution, especially in tasks that involve waiting, like network requests or timers.
-
-### What is the Default Nature of JavaScript?
-
-JavaScript is **synchronous by default**. This means that any native JavaScript code executes line by line, with each line needing to complete before the next one can begin. This synchronous nature is due to JavaScript being single-threaded.
-
-### Example of Asynchronous Code
-
-```javascript
-setTimeout(function f() {
-  console.log("Hello");
-}, 3000);
-
-console.log("End");
-```
-
-In this example, `setTimeout` is a higher-order function that delays the execution of `console.log("Hello")` by 3000 milliseconds (3 seconds). However, the code after `setTimeout`, `console.log("End");`, executes immediately.
-
-**Important Points**:
-
-- `setTimeout` is not a native JavaScript function; it is provided by the runtime environment (e.g., Node.js, Deno, or web browsers like Chrome, Edge, etc.).
-- Similarly, `console.log()` is also provided by the runtime environment, not by JavaScript itself.
-- If you pass `0` as the delay time in `setTimeout`, `Node.js` automatically sets it to 1 millisecond. Setting a delay of `0` is not actually possible in `Node.js`.
-
----
-
-### How Does JavaScript Handle Runtime Code?
-
-JavaScript manages runtime code using the **event loop** and **queues** (like the macro task queue and micro task queue). Here's a simplified explanation:
-
-1. **Call Stack**: JavaScript has a call stack where it keeps track of the function calls. If a task in the code is related to the runtime environment (like `setTimeout`), JavaScript sends it to the runtime environment and moves on to the next line of code.
-2. **Event Loop**: The event loop continuously checks if the call stack is empty. If the call stack is empty and there are tasks waiting in the queue (like a completed `setTimeout`), the event loop moves the task from the queue to the call stack for execution.
-3. **Queues**: If a runtime task completes while the call stack is not empty, the runtime environment places the completed tasks into the `Macro-task queue`. The tasks in these queues are processed in a **First-Come, First-Served (FCFS)** order when the call stack is empty.
-
-In summary, the event loop ensures that tasks are executed efficiently, even when asynchronous operations are involved.
-
----
-
 ### Closures
 
 A `closure` provides access to the variables of its parent function even after that parent function has returned. The function keeps a reference to its outer scope, preserving the scope chain over time. This means that the variable environment of the execution context in which the function was created remains accessible even after that execution context has finished.
@@ -153,7 +153,9 @@ This example demonstrates how the inner function retains access to `passengerCou
 
 ### What are Promises?
 
-Promises are a significant improvement over callbacks, offering a more structured and readable way to manage asynchronous operations. They are special JavaScript objects designed to handle tasks that are expected to complete in the future, such as downloading data or setting a timer.
+- Promises provide a significant improvement over callbacks, offering a more structured and readable way to manage asynchronous operations.
+- A Promise is an object that represents the eventual completion (or failure) of an asynchronous task.
+- They are special JavaScript objects designed to handle operations expected to complete in the future, such as data fetching or setting a timer.
 
 **Focus Points**:
 1. `How to create a promise.`
