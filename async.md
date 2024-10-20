@@ -555,7 +555,7 @@ Promise 1 resolved
 
 - The **`Promise.any()`** static method takes an iterable of promises as input and returns a single `Promise`.
 - This returned promise fulfills when any of the input promises fulfill, providing the first fulfillment value.
-- It rejects when all of the input's promises reject, returning an `AggregateError`, which is an array of all errors from the rejected promises.
+- It rejects when all of the input's promises reject, returning an `AggregateError`, which is an array of all errors from the rejected promises. To handle this error, log `error.errors()`, which will show the array of errors.
 
 **Example:**
 ```javascript
