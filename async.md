@@ -471,7 +471,6 @@ downloadData("https://example.com/data")
   In the above example, each `.then()` receives the result of the previous one and performs an operation on it, passing the new value to the next `.then()`, and the `.catch()` ensures that any failure in the chain is caught and handled. This structure is much more readable and manageable compared to nesting callbacks.
 
 ---
-
 ### **Promise API**
 
 #### `Promise.all()`
@@ -481,22 +480,92 @@ downloadData("https://example.com/data")
 - The time it takes for `Promise.all()` to fulfill depends on the promise that takes the longest to resolve.
 - If any of the input promises reject, `Promise.all()` immediately rejects and returns the error for the first rejected promise.
 
+**Example:**
+```javascript
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Promise 1 resolved'); // p1 resolves after 100ms
+    }, 100);
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        reject('Promise 2 rejected'); // p2 rejects after 2000ms
+    }, 2000);
+});
+
+const p3 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Promise 3 resolved'); // p3 resolves after 300ms
+    }, 300);
+});
+
+Promise.all([p1, p2, p3])
+    .then(results => console.log(results))
+    .catch(error => console.error(error));
+```
+**Explanation:** In this example, `Promise.all()` will reject immediately due to `p2` rejecting, and the output will be:  
+
+```
+Promise 2 rejected
+```
+
+
 #### `Promise.allSettled()`
 
 - The **`Promise.allSettled()`** static method takes an iterable of promises as input and returns a single `Promise`.
-- This returned promise fulfills when all of the input's promises settle, providing an array of objects that describe the outcome of each promise, similar to `Promise.all()`.
-- If any of the input promises reject, `Promise.allSettled()` does not immediately reject; it waits for all promises to settle. After that, it returns an array of the fulfillment values of fulfilled promises and the errors of rejected promises.
+- This returned promise fulfills when all of the input promises settle, providing an array of objects that describe the outcome of each promise.
+- If any of the input promises reject, `Promise.allSettled()` does not immediately reject; it waits for all promises to settle, returning an array of the fulfillment values of fulfilled promises and the errors of rejected promises.
+
+**Example:**
+```javascript
+Promise.allSettled([p1, p2, p3])
+    .then(results => console.log(results))
+    .catch(error => console.error(error));
+```
+**Explanation:** In this example, `Promise.allSettled()` will return an array showing that `p1` resolved, `p2` rejected, and `p3` resolved, and the output will look like: 
+
+```
+[
+    { status: "fulfilled", value: "Promise 1 resolved" },
+    { status: "rejected", reason: "Promise 2 rejected" },
+    { status: "fulfilled", value: "Promise 3 resolved" }
+]
+```
+
 
 #### `Promise.race()`
 
 - The **`Promise.race()`** static method takes an iterable of promises as input and returns a single `Promise`.
 - This returned promise settles with the eventual state of the first promise that settles. If fulfilled, it returns the value; if rejected, it returns the error.
 
+**Example:**
+```javascript
+Promise.race([p1, p2, p3])
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
+```
+**Explanation:** In this case, `Promise.race()` will log "Promise 1 resolved" because `p1` resolves before `p2` rejects. The output will be:  
+```
+Promise 1 resolved
+```
+
+
 #### `Promise.any()`
 
 - The **`Promise.any()`** static method takes an iterable of promises as input and returns a single `Promise`.
-- This returned promise fulfills when any of the input's promises fulfills, providing the first fulfillment value.
+- This returned promise fulfills when any of the input promises fulfill, providing the first fulfillment value.
 - It rejects when all of the input's promises reject, returning an `AggregateError`, which is an array of all errors from the rejected promises.
 
---- 
+**Example:**
+```javascript
+Promise.any([p1, p2, p3])
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
+```
+**Explanation:** In this example, `Promise.any()` will fulfill with "Promise 1 resolved" since it is the first promise to fulfill, and the output will be:  
+```
+Promise 1 resolved
+```
 
+---
