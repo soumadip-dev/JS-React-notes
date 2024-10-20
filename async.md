@@ -409,58 +409,94 @@ In this code, we can observe the following sequence of events:
     - If the returned promise is fulfilled, `p2` will also be fulfilled with the same value.
     - If the returned promise is rejected, `p2` will be rejected with the same reason.
 
-- **Chaining Promises:**  
+---
+
+### **Chaining Promises** and **exception handling:**  
   `.then()` can be chained to handle a sequence of asynchronous operations, where the result of one operation is passed to the next. Each `.then()` in the chain returns a new promise, allowing for sequential asynchronous processing.
+  
+  Here's an example that demonstrates this concept by downloading data, writing it to a file, and then uploading the file. The `.catch()` block at the end handles any errors that may occur at any stage of the promise chain:
+  
+```javascript
+function downloadData(url) {
+  return new Promise(function executeDownload(resolve, reject) {
+    console.log(`Downloading from ${url}`);
 
-  ```javascript
-  function downloadData(url) {
-    return new Promise(function executeDownload(resolve, reject) {
-      console.log(`Downloading from ${url}`);
+    setTimeout(() => {
+      console.log("Download is complete");
+      let downloadedData = "Some Data";
+      resolve(downloadedData);
+    }, 3000);
+  });
+}
 
-      setTimeout(() => {
-        console.log("Download is complete");
-        let downloadedData = "Some Data";
-        resolve(downloadedData);
-      }, 3000);
-    });
-  }
+function writeDataToFile(data, fileName) {
+  return new Promise(function executeWrite(resolve, reject) {
+    console.log(`Writing ${data} to file`);
 
-  function writeDataToFile(data, fileName) {
-    return new Promise(function executeWrite(resolve, reject) {
-      console.log(`Writing ${data} to file`);
+    setTimeout(() => {
+      console.log(`Writing to file ${fileName} is complete`);
+      resolve(null);
+    }, 2000);
+  });
+}
 
-      setTimeout(() => {
-        console.log(`Writing to file ${fileName} is complete`);
-        resolve(null);
-      }, 2000);
-    });
-  }
+function uploadFile(fileName, url) {
+  return new Promise(function executeUpload(resolve, reject) {
+    console.log(`Uploading ${fileName} to ${url}`);
 
-  function uploadFile(fileName, url) {
-    return new Promise(function executeUpload(resolve, reject) {
-      console.log(`Uploading ${fileName} to ${url}`);
+    setTimeout(() => {
+      console.log("Upload is complete");
+      let uploadStatus = "Success";
+      resolve(uploadStatus);
+    }, 1000);
+  });
+}
 
-      setTimeout(() => {
-        console.log("Upload is complete");
-        let uploadStatus = "Success";
-        resolve(uploadStatus);
-      }, 1000);
-    });
-  }
+downloadData("https://example.com/data")
+  .then(function handleDownload(downloadedData) {
+    return writeDataToFile(downloadedData, "file.txt");
+  })
+  .then(function handleWrite() {
+    return uploadFile("file.txt", "https://example.com/upload");
+  })
+  .then(function handleUpload(status) {
+    console.log(status);
+  })
+  .catch(function (error) {
+    console.log("Error:", error); // Handling any errors
+  });
+```
 
-  downloadData("https://example.com/data")
-    .then(function handleDownload(downloadedData) {
-      return writeDataToFile(downloadedData, "file.txt");
-    })
-    .then(function handleWrite() {
-      return uploadFile("file.txt", "https://example.com/upload");
-    })
-    .then(function handleUpload(status) {
-      console.log(status);
-    });
-  ```
-
-  **Explanation:**  
-  In the above example, each `.then()` receives the result of the previous one and performs an operation on it, passing the new value to the next `.then()`.
+ **Explanation:**  
+  In the above example, each `.then()` receives the result of the previous one and performs an operation on it, passing the new value to the next `.then()`, and the `.catch()` ensures that any failure in the chain is caught and handled. This structure is much more readable and manageable compared to nesting callbacks.
 
 ---
+
+### **Promise API**
+
+#### `Promise.all()`
+
+- The **`Promise.all()`** static method takes an iterable of promises as input and returns a single `Promise`.
+- This returned promise is fulfilled when **all** of the input promises are fulfilled. The fulfillment value is an array containing the results of all the promises in the order they were passed in.
+- The time it takes for `Promise.all()` to fulfill depends on the promise that takes the longest to resolve.
+- If any of the input promises reject, `Promise.all()` immediately rejects and returns the error for the first rejected promise.
+
+#### `Promise.allSettled()`
+
+- The **`Promise.allSettled()`** static method takes an iterable of promises as input and returns a single `Promise`.
+- This returned promise fulfills when all of the input's promises settle, providing an array of objects that describe the outcome of each promise, similar to `Promise.all()`.
+- If any of the input promises reject, `Promise.allSettled()` does not immediately reject; it waits for all promises to settle. After that, it returns an array of the fulfillment values of fulfilled promises and the errors of rejected promises.
+
+#### `Promise.race()`
+
+- The **`Promise.race()`** static method takes an iterable of promises as input and returns a single `Promise`.
+- This returned promise settles with the eventual state of the first promise that settles. If fulfilled, it returns the value; if rejected, it returns the error.
+
+#### `Promise.any()`
+
+- The **`Promise.any()`** static method takes an iterable of promises as input and returns a single `Promise`.
+- This returned promise fulfills when any of the input's promises fulfills, providing the first fulfillment value.
+- It rejects when all of the input's promises reject, returning an `AggregateError`, which is an array of all errors from the rejected promises.
+
+--- 
+
