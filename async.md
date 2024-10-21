@@ -569,3 +569,131 @@ Promise 1 resolved
 ```
 
 ---
+### Types of Programming Languages
+Programming languages can be categorised into two main types:
+1. **Imperative**: In imperative programming, you explicitly define *how* to accomplish a task, specifying the steps required to achieve the desired outcome.
+2. **Declarative**: In declarative programming, you specify *what* you want to accomplish without detailing the exact steps on *how* it should be done.
+
+---
+### Iterators
+- **Definition**: An iterator is a design pattern that enables writing declarative code. It is an object that allows you to traverse through a collection (such as an array or a string) one element at a time.
+- **Example**:
+
+  ```javascript
+  const array = [1, 2, 3];
+  const iterator = array[Symbol.iterator]();
+
+  console.log(iterator.next()); // { value: 1, done: false }
+  console.log(iterator.next()); // { value: 2, done: false }
+  console.log(iterator.next()); // { value: 3, done: false }
+  console.log(iterator.next()); // { value: undefined, done: true }
+  ```
+
+- **Custom Iterator Example**:
+  You can implement a custom iterator using the following function:
+
+  ```javascript
+  function fetchNextElement(arr) {
+    let idx = 0;
+
+    function next() {
+      if (idx >= arr.length) {
+        return { value: undefined, done: true };
+      }
+      const newElement = arr[idx];
+      idx++;
+      return { value: newElement, done: false };
+    }
+
+    return { next };
+  }
+
+  const arr = [1, 2, 3, 4, 5];
+  const autoFetcher = fetchNextElement(arr);
+
+  console.log(autoFetcher.next()); // { value: 1, done: false }
+  console.log(autoFetcher.next()); // { value: 2, done: false }
+  console.log(autoFetcher.next()); // { value: 3, done: false }
+  console.log(autoFetcher.next()); // { value: 4, done: false }
+  console.log(autoFetcher.next()); // { value: 5, done: false }
+  console.log(autoFetcher.next()); // { value: undefined, done: true }
+  ```
+
+---
+### Generators
+- **Definition**: A generator is a special type of function that can pause its execution and resume later. It is defined using the `function*` syntax and uses the `yield` keyword to return values.
+- **Key Features**:
+  - **`yield` Keyword**: Pauses the function's execution and returns a value. Execution resumes when `next()` is called again.
+  - **`function*` Syntax**: Used to define a generator function.
+
+- **Example**:
+  ```javascript
+  function* generatorFunction() {
+    console.log("Line 1");
+    yield 1;
+    console.log("Line 2");
+    yield 2;
+    console.log("Line 3");
+    yield 3;
+  }
+
+  const gen = generatorFunction();
+
+  console.log(gen.next()); 
+  console.log(gen.next()); 
+  console.log(gen.next()); 
+  console.log(gen.next()); 
+  ```
+
+- **Output:**
+  ```
+  Line 1
+  { value: 1, done: false }
+  Line 2
+  { value: 2, done: false }
+  Line 3
+  { value: 3, done: false }
+  { value: undefined, done: true }
+  ```
+
+- **Usage**:
+  - **Lazy Evaluation**: Values are computed only when needed, making it useful for handling large datasets or infinite sequences.
+  - **State Machines**: Generators can effectively manage complex state changes across multiple calls.
+
+---
+### Passing Values into Generators
+
+Generators allow values to be passed back into the function using the `next()` method. 
+- Here's an example:
+
+```javascript
+function* gen() {
+  console.log("Inside Generator");
+  const x = yield 10;
+  const y = x + 30;
+  yield y;
+}
+
+const it = gen();
+console.log(it.next());       // Step 1
+console.log(it.next(20));     // Step 2
+```
+
+**Explanation**:
+1. **Step 1: `it.next()`**  
+   - The generator starts executing, logging "Inside Generator" and yielding `10`.
+   - The generator pauses, and the output is `{ value: 10, done: false }`.
+
+2. **Step 2: `it.next(20)`**  
+   - The generator resumes execution, receiving `20` as the value for `x`.
+   - It calculates `y` as `x + 30`, resulting in `50`.
+   - The generator then yields `50`, with the output `{ value: 50, done: false }`.
+
+**Output**:
+  ```
+  Inside Generator
+  { value: 10, done: false }
+  { value: 50, done: false }
+  ```
+
+**Note**: If the `return` keyword is used in a generator function, any code after the `return` statement will not be executed.
