@@ -697,3 +697,72 @@ console.log(it.next(20));     // Step 2
   ```
 
 **Note**: If the `return` keyword is used in a generator function, any code after the `return` statement will not be executed.
+
+---
+
+### What is `async`? and What is `await`?
+
+#### `async`: 
+The keyword **`async`** is used to define an **`async function`**. When a function is declared as `async`, it automatically returns a **Promise**. If the function returns a value that is not a promise, JavaScript will wrap it in a resolved promise. This makes it easier to write asynchronous code, as it allows you to work with promises in a more readable way.
+
+#### `await`:
+The **`await`** keyword is used to pause the execution of an **`async`** function until a promise is resolved or rejected. It can only be used inside an **`async`** function. When used, it ensures that the next line of code does not run until the awaited promise settles.
+
+#### Example:
+```javascript
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data from API');
+  }, 1000);
+});
+
+// Async and await
+async function handlePromise() {
+  const result = await p;
+  console.log(result);
+}
+
+handlePromise();
+// Output (after 1s):
+// Data from API
+```
+
+---
+
+### How `async` and `await` Work Behind the Scenes
+
+When you use the `async` keyword, the function automatically returns a promise. Inside the `async` function, if you use the `await` keyword before a promise, JavaScript pauses the function execution at that line, waits for the promise to resolve, and then resumes with the resolved value.
+
+Behind the scenes, this works similarly to chaining `.then()` methods on promises, but `async/await` makes the code easier to write and read by eliminating the need for callbacks.
+
+---
+
+### Error Handling in `async/await`
+
+In `async/await`, error handling is typically managed using a `try...catch` block. If a promise is rejected or an error occurs during the execution of an `async` function, the `catch` block catches and handles the error.
+
+#### Example:
+```javascript
+const GITHUB_API = 'https://api.github.com/users/soumadip-dev';
+
+async function fetchDataWithErrorHandling() {
+  try {
+    const data = await fetch(GITHUB_API);
+    const response = await data.json();
+    console.log(response);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+fetchDataWithErrorHandling();
+```
+
+You can also handle errors by attaching `.catch()` directly to the async function call:
+
+```javascript
+fetchDataWithErrorHandling().catch(error => console.error('Error:', error));
+```
+
+#### Explanation:
+- The `try` block contains the `await` calls to fetch the data. If an error occurs during the fetch operation (e.g., network issues or an invalid API endpoint), the `catch` block will execute, logging the error and preventing the script from breaking.
