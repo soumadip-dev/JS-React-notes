@@ -729,11 +729,12 @@ handlePromise();
 
 ---
 
-### How `async` and `await` Work Behind the Scenes
+### How `async` and `await` Work Behind the Scenes 
 
-When you use the `async` keyword, the function automatically returns a promise. Inside the `async` function, if you use the `await` keyword before a promise, JavaScript pauses the function execution at that line, waits for the promise to resolve, and then resumes with the resolved value.
 
-Behind the scenes, this works similarly to chaining `.then()` methods on promises, but `async/await` makes the code easier to write and read by eliminating the need for callbacks.
+When using the `async` keyword, a function automatically returns a promise. Inside an `async` function, the `await` keyword allows JavaScript to handle asynchronous operations in a structured way. At the point where `await` is used, JavaScript returns from the function and continues executing other tasks in the event loop. Once the awaited promise resolves, the function resumes execution from that point with the resolved value.
+
+Behind the scenes, `await` works like a generator’s `yield`. It pauses the function at that point, and when the promise resolves, it continues running the function with the promise’s result. This is similar to using `.then()` with promises, but `async/await` makes the code easier to read and write.
 
 ---
 
