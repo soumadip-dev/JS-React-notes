@@ -306,6 +306,8 @@ These questions cover various aspects of OOP in JavaScript and help assess your 
 - Both operators check for equality, but `==` performs implicit type conversion, meaning it converts the operands to the same type before comparing them.
 - In contrast, `===` does not perform any implicit type conversion and checks both the value and the type of the operands.
 
+- 
+
 ### Can you explain what higher-order functions are?
 
 - **Higher-order functions** are functions that either accept another function as a parameter, return a function, or both.
