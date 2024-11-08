@@ -5,7 +5,7 @@ JavaScript has four main pillars:
 1. **Scopes**
 2. **Coercion and Types**
 3. **Async Programming**
-4. **Objects and Classes**  ⭐
+4. **Objects and Classes**  
 
 ---
 
