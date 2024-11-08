@@ -1,3 +1,68 @@
+### Variable Shadowing
+
+In JavaScript, **variable shadowing** occurs when a variable declared within a certain scope (like a function or block) has the same name as a variable in an outer scope. When this happens, the inner scope "shadows" the outer one, meaning the inner variable takes precedence within its own scope, making the outer variable inaccessible in that scope.
+
+Here’s an example to illustrate variable shadowing:
+
+```javascript
+let x = 10;
+
+function exampleFunction() {
+  let x = 20;  // This x shadows the outer x
+  console.log(x);  // Output: 20
+}
+
+exampleFunction();
+console.log(x);  // Output: 10
+```
+
+#### Illegal Shadowing
+
+**Illegal shadowing** occurs when we try to shadow a `let` variable with a `var` variable within the same scope. This is not allowed in JavaScript and will result in an error.
+
+```javascript
+function test() {
+  var a = "Hello";
+  let b = "Bye";
+
+  if (true) {
+    let a = "Hi";   // Allowed: `let` shadowing `var`
+    var b = "Goodbye";  // Error: 'b' has already been declared
+    console.log(a);
+    console.log(b);
+  }
+}
+test();
+```
+
+In this example, attempting to shadow the `let` variable `b` with `var` within the same scope will cause an error.
+
+--- 
+
+### `var` vs `let` vs `const` declaration
+
+- `var` can be redeclared and updated within the same scope.
+- `let` can be updated but not redeclared in the same scope.
+- `const` cannot be redeclared or updated.
+
+Example:
+
+```javascript
+var x = 5;
+var x = 10; // valid
+
+let y = 5;
+y = 10;     // valid
+// let y = 20; // Error: cannot redeclare `y`
+
+const z = 5;
+// z = 10;    // Error: cannot reassign `z`
+```
+
+
+---
+---
+
 ### What is `Object.seal()` in JavaScript?
 
 `Object.seal()` is a method in JavaScript that seals an object. It prevents the addition or deletion of properties while still allowing modifications to the values of existing properties. This is useful when you want to keep the object's structure the same but still allow updates to its data.
@@ -306,9 +371,64 @@ These questions cover various aspects of OOP in JavaScript and help assess your 
 - Both operators check for equality, but `==` performs implicit type conversion, meaning it converts the operands to the same type before comparing them.
 - In contrast, `===` does not perform any implicit type conversion and checks both the value and the type of the operands.
 
-- 
-
 ### Can you explain what higher-order functions are?
 
 - **Higher-order functions** are functions that either accept another function as a parameter, return a function, or both.
 - **Example:** The `forEach` method is a higher-order function because it takes another function as an argument.
+
+---
+# Async Await
+
+### Given the following JavaScript code that utilizes Promises and `async`/`await`, what will be the order of the console log outputs, and why?
+
+```javascript
+const p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Data from API 1');
+    }, 10000);
+});
+
+const p2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Data from API 2');
+    }, 500);
+});
+
+// Async and await
+async function handlePromise() {
+    console.log('Start processing');
+  
+    const result1 = await p1;
+    console.log('Received from API 1');
+    console.log(result1);
+  
+    const result2 = await p2;
+    console.log('Received from API 2');
+    console.log(result2);
+}
+
+handlePromise();
+```
+
+#### Follow-up Question:
+- How would the behavior change if the `await` for `p1` and `p2` were swapped, and why?
+
+#### Answer:
+
+1. **Order of console log outputs:**
+   - The first output will be `"Start processing"`, as it is logged synchronously before any `await`.
+   - Since `p1` has a 10-second delay (setTimeout of 10,000 ms), the code will wait for the resolution of `p1`. After `p1` resolves, `"Received from API 1"` will be logged, followed by `"Data from API 1"`, the resolved value of `p1`.
+   - Then, it will wait for the promise `p2`, which resolves much faster (500 ms). `"Received from API 2"` will be logged, followed by `"Data from API 2"`, the resolved value of `p2`.
+
+ **Output sequence:**
+```
+Start processing
+Received from API 1
+Data from API 1
+Received from API 2
+Data from API 2
+```
+
+2. **If `await p2` comes before `await p1`:**
+   - The code will first wait for `p2` (which resolves in 500 ms) before waiting for `p1` (which resolves in 10 seconds). Hence, `"Received from API 2"` and `"Data from API 2"` will be logged earlier, followed by `"Received from API 1"` and `"Data from API 1"`.
+
