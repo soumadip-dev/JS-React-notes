@@ -5,8 +5,8 @@ A comprehensive collection of notes and examples from my JavaScript learning jou
 ## Table of Contents
 ---
 
-* [Objects](object.md)
 * [Scope](scope.md)
+* [Objects](object.md)
 * [function](function.md)
 * [OOPS](oops.md)
 * [Asynchronous](async.md)
