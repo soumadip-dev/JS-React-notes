@@ -5,7 +5,7 @@ JavaScript has four main pillars:
 1. **Scopes**
 2. **Coercion and Types**
 3. **Async Programming**
-4. **Objects and Classes**
+4. **Objects and Classes**  ⭐
 
 ---
 
@@ -50,7 +50,7 @@ JavaScript is a:
 
 ##### Phases of Execution in JavaScript
 
-JavaScript executes code in two distinct phases:
+JavaScript executes code in three distinct phases:
 
 1. **Parsing:** This involves reading the code and converting it into a data structure called the _Abstract Syntax Tree (AST)_. This process breaks down each line of code into meaningful components for JavaScript and checks for syntax errors.
    
@@ -60,7 +60,7 @@ JavaScript executes code in two distinct phases:
 
 ---
 
-##### Execution Context
+##### [Execution Context](https://youtu.be/iLWTnMzWtj4?si=mICJAs1s5TDUFHfj)
 
 An **execution context** is an abstract concept that holds information about the environment within which the JavaScript code is executed. Every time a script or function runs, an execution context is created, determining which variables, objects, and functions are accessible during the code's execution.
 
@@ -80,7 +80,7 @@ An **execution context** is an abstract concept that holds information about the
    - Created when `eval()` is called.
    - Generally avoided due to performance and security concerns.
 
-Each execution context has two stages:
+###### Each execution context has two stages:
 
 1. **Creation Phase:** 
    - Memory is allocated for variables and functions, the scope chain is established, and the `this` keyword is defined (not in arrow functions).
@@ -155,6 +155,8 @@ console.log(z); // Error: z is not defined
 
 In this example, `z` is declared inside an `if` block, so it is only accessible within that block.
 
+---
+
 #### Variable Declarations and Scope
 
 In JavaScript, variables can be declared using `var`, `let`, or `const`. The way a variable is declared affects its scope.
@@ -166,6 +168,9 @@ In JavaScript, variables can be declared using `var`, `let`, or `const`. The way
 
 ##### Lexical Scoping / Lexical Parsing:
 JavaScript uses lexical scoping, also known as static scoping. In lexical scoping, the scope of variables is determined during compile time. Although variable values are assigned during the execution phase, the scope of each variable is defined during the compilation phase. Therefore, the rules for accessing variables are based on the location where functions and blocks are written in the code.
+
+| **Scope Chaining**:
+Scope chaining is the process by which JavaScript looks up variable values in the current scope and, if not found, continues searching in the outer scopes, following the chain of scopes until the variable is found or the global scope is reached. This is possible because of lexical scoping, where nested functions have access to variables in their outer functions.
 
 Example:
 ```javascript
@@ -182,7 +187,9 @@ function outerFunction() {
 outerFunction(); // Outputs: I am outside!
 ```
 
-In the above code, `innerFunction` can access `outerVar` because it is lexically within the scope of `outerFunction`.
+In the above code, `innerFunction` can access `outerVar` because it is lexically within the scope of `outerFunction`. If `outerVar` were not found in the immediate scope of `innerFunction`, JavaScript would check the next outer scope (in this case, `outerFunction`'s scope) to find it, forming a chain of scopes.
+
+In summary, **scope chaining** allows JavaScript to search through the chain of scopes to find variables, starting from the innermost scope and moving outward. This behavior is a fundamental aspect of lexical scoping..
 
 
 ##### **`var`:**
@@ -224,7 +231,7 @@ Within the `if` block, `x` and `y` are reassigned:
 
 Since `var` has function or global scope, the changes to `x` and `y` in the `if` block affect their values globally. Thus, when the final `console.log(x, y);` is executed, both `x` and `y` have the values `20` and `30`, respectively.
 
----
+
 
 | **Note:** _How is function scope different from block scope?_
 
@@ -241,33 +248,30 @@ function fun() {
 If we try to do the same thing using `let` instead of `var`, it will result in an error because `let` does not have function scope like `var` does.
 
 
-| **Note:** _Automatically Global:_
-This refers to variables that are automatically added to the global scope under certain circumstances. Typically, this happens when you create a variable inside a function without using the `var`, `let`, or `const` keyword. These variables automatically become global variables, even though they are defined inside a function.
+
+| **Note:** _Automatically Global:_  
+This refers to variables that are automatically added to the global scope in certain situations. Typically, this occurs when you create a variable inside a function without using the `var`, `let`, or `const` keyword. These variables become global, even if they are defined inside a function.
 
 ```javascript
-var mentor = "Ram"; // 'mentor' is defined globally
+var mentor = "Ram"; // 'mentor' is declared globally
 
 function exampleFunction() {
     mentor = "Sam"; // This modifies the global 'mentor' variable
     language = "JavaScript"; // 'language' is not declared with var/let/const, so it becomes a global variable
-    console.log("Learning", language, "with", mentor);
 }
-
-exampleFunction(); // Calls the function, modifying the global variables
-
-console.log("Current mentor:", mentor); // Outputs the current value of 'mentor' -> Sam
-console.log("Current language:", language); // Outputs the current value of 'language' -> JavaScript
+console.log("Current mentor:", mentor); // Ram
+// console.log("Current language:", language);  // Error because 'language' is not yet defined
+exampleFunction(); // calling the function to modify mentor and declare language globally
+console.log("Current mentor:", mentor); // Sam
+console.log("Current language:", language); // JavaScript
 ```
 
-- If we call `exampleFunction();` after the  
-  `console.log("Current mentor:", mentor);` and  
-  `console.log("Current language:", language);`, 
-- The first `console.log` will show the mentor as `Ram`, because `exampleFunction()` has not yet been called to modify the global variable. 
-- The second `console.log` will throw an error because the `language` variable is not yet defined globally until `exampleFunction();` is called.
+Automatic global variables can cause issues in JavaScript. To prevent this, you can enable **strict mode** by adding the following at the top of your script:
 
-Automatic global variables are problematic in JavaScript. To prevent this, you can enable **strict mode** using the following command at the top of your script: `"use strict";`.
+```javascript
+"use strict";
+```
 
----
 
 ##### `let` and **`const`**: 
 These keywords support block scope, meaning variables declared inside a block are only accessible within that block.
@@ -312,23 +316,27 @@ These keywords support block scope, meaning variables declared inside a block ar
   let d = 80; // Error: Identifier 'd' has already been declared
   ```
 
+---
 ### Hoisting
 
 **Hoisting** is a term commonly used in the JavaScript community, although it is not officially defined in the ECMAScript specification. It refers to a behavior in JavaScript's scoping mechanism, which occurs in two main phases of code execution: the **Compilation and Scope Resolution Phase** and the **Interpretation or Execution Phase**. During the compilation phase, many variables are already identified, so when the code is executed, it seems as  JavaScript is aware of these variables or function even before their actual declaration. This phenomenon, where the interpreter appears to move the declarations of functions, variables, classes, or imports to the top of their scope before execution, is known as **hoisting**.
 
-- **Example of Hoisting with `var`:**
+- **Example of Hoisting with `var` and `let`:**
 
 ```javascript
-function hoistVar() {
-    console.log(a); // undefined (due to hoisting)
+function hoist() {
+    console.log(a); // undefined (var is hoisted and initialized with undefined)
+    // console.log(b); // ReferenceError (let is in the Temporal Dead Zone)
     var a = 90;
+    let b = 30;
     console.log(a); // 90
+    console.log(b); // 30
 }
 
-hoistVar();
+hoist();
 ```
 
-In this example, the variable `a` is hoisted, but its value is not assigned until the line `var a = 90;`. Therefore, the first `console.log(a);` outputs `undefined`.
+In this example, `var a` is hoisted, so `console.log(a);` outputs `undefined` because its value is not assigned until the line `var a = 90;`. However, `let b` is also hoisted, but it is in the **Temporal Dead Zone** (TDZ) from the start of the block until the declaration is encountered. Accessing `b` before its declaration throws a `ReferenceError` because variables declared with `let` are not initialized until the execution reaches the `let` statement. 
 
 - **Example of Hoisting with a `Function Declaration`:**
 
@@ -344,4 +352,8 @@ In this example, the function `addNum` is fully hoisted, allowing it to be calle
 
 - **Hoisting with `Function Expressions`:**
 
-If a function expression is created using `const` or `let`, the function will not be hoisted. If a function expression is created using `var`, it will be hoisted but will store `undefined`. If you try to call the function before its definition, it will throw an error, stating that the function is `not a function`, because the code attempts to call `undefined()`.
+If a function expression is created using `const` or `let`, the function itself is not available before its declaration because the variable is hoisted but remains in the **Temporal Dead Zone** (TDZ). If a function expression is created using `var`, it is hoisted but initialized with `undefined`. If you try to call the function before its definition, it will throw a `TypeError`, stating that the function is `not a function`, because the code attempts to call `undefined()`.
+
+---
+---
+
