@@ -68,11 +68,11 @@ This method prevents adding or deleting properties but allows modification of ex
 const product = { name: "iPhone 14 Pro", price: 125000 };
 Object.seal(product);
 
-product.company = "Apple";       // Not allowed: Adding new property
-delete product.price;            // Not allowed: Deleting property
+product.company = "Apple"; // Not allowed: Adding new property
+delete product.price; // Not allowed: Deleting property
 
 product.name = "iPhone 14 Pro Max"; 
-console.log(product);            // Allowed: Modifying existing property
+console.log(product); // Allowed: Modifying existing property
 // Output: { name: "iPhone 14 Pro Max", price: 125000 }
 ```
 
@@ -83,12 +83,10 @@ This method prevents adding, deleting, or modifying properties.
 const product = { name: "iPhone 14 Pro", price: 125000 };
 Object.freeze(product);
 
-product.company = "Apple";       // Not allowed: Adding new property
-delete product.price;            // Not allowed: Deleting property
-product.name = "iPhone 14 Pro Max"; 
-// Not allowed: Modifying existing property
-console.log(product);
-// Output: { name: "iPhone 14 Pro", price: 125000 }
+product.company = "Apple"; // Not allowed: Adding new property
+delete product.price; // Not allowed: Deleting property
+product.name = "iPhone 14 Pro Max"; // Not allowed: Modifying existing property
+console.log(product); // Output: { name: "iPhone 14 Pro", price: 125000 }
 ```
 
 #### `Object.preventExtensions()`
@@ -98,10 +96,10 @@ This method prevents adding new properties, but allows modification and deletion
 const product = { name: "iPhone 14 Pro", price: 125000 };
 Object.preventExtensions(product);
 
-product.company = "Apple";       // Not allowed: Adding new property
-delete product.price;            // Allowed: Deleting property
+product.company = "Apple"; // Not allowed: Adding new property
+delete product.price; // Allowed: Deleting property
 product.name = "iPhone 14 Pro Max"; 
-console.log(product);            // Allowed: Modifying existing property
+console.log(product); // Allowed: Modifying existing property
 // Output: { name: "iPhone 14 Pro Max" }
 ```
 
@@ -112,8 +110,6 @@ These methods check if an object is frozen or sealed, respectively.
 console.log(Object.isFrozen(product));  // true
 console.log(Object.isSealed(product));  // true
 ```
-
-If an object is sealed but not frozen:
 
 ### `Object.defineProperty()`
 This method allows fine control over object properties, making them writable or configurable.
@@ -158,8 +154,9 @@ function customFreeze(obj) {
 ```javascript
 const target = { a: 1 };
 const source = { b: 2, c: 3 };
-Object.assign(target, source);
-console.log(target); // Output: { a: 1, b: 2, c: 3 }
+const source2 = { a: 3, c: 5 }; 
+Object.assign(target, source, source2);
+console.log(target); // Output: {a: 3, b: 2, c: 5}
 ```
 
 #### Important Consideration:
