@@ -193,6 +193,6 @@ The `<script>` tag’s `type` attribute specifies the type of script:
 
 **Note:** If the `type` attribute is omitted, the default script type is assumed to be JavaScript.
 
----
----
----
+
+ <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" 
+        alt="Hr" >
