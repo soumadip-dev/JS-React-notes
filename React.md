@@ -193,6 +193,39 @@ The `<script>` tag’s `type` attribute specifies the type of script:
 
 **Note:** If the `type` attribute is omitted, the default script type is assumed to be JavaScript.
 
+---
+## What is `JSX`?
 
- <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" 
-        alt="Hr" >
+- JSX stands for **JavaScript XML**.
+- JSX allows you to write HTML elements directly within JavaScript and insert them into the DOM without using `createElement()` or `appendChild()` methods.
+- JSX simplifies the process of writing and adding HTML in React applications.
+- JSX converts HTML tags into React elements.
+- With JSX, you can write both the markup and logic of a component in a single `.jsx` file, making it easier to maintain and debug.
+
+-  **Example 1: Using JSX**
+
+```jsx
+const myElement = <h1>I Love JSX!</h1>; // use () in multiline JSX
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myElement);
+```
+
+- **Example 2: Without JSX**
+
+```javascript
+const myElement = React.createElement('h1', {}, 'I do not use JSX!');
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myElement);
+```
+
+---
+
+## What is Babel and how does it work in React?
+
+In React, we write JSX, which looks like HTML but is not valid JavaScript syntax. Since browsers cannot understand JSX directly, it needs to be converted (or transpiled) into regular JavaScript. This is where Babel comes in.
+
+Babel is a JavaScript transpiler that converts JSX into browser-compatible JavaScript code. It works behind the scenes when we use a bundler (like Webpack) to create a React app. The Babel setup is included in the `node_modules` folder of the React app.
+
+In addition to transpiling JSX, Babel also converts modern JavaScript (like ES6+) into an older version of JavaScript that works in older browsers. This ensures compatibility across various browser environments.
+
+---
