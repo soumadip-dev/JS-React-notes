@@ -219,7 +219,20 @@ root.render(myElement);
 ```
 
 ---
+## Is `JSX` mandatory for React?
 
+`JSX` is a syntax extension for JavaScript that allows you to write HTML-like code within JavaScript, making it easier to create and visualize React components. These `JSX` elements are ultimately compiled into calls to `React.createElement(component, props, ...children)`, which generate React elements that are rendered to the DOM.
+
+While `JSX` simplifies writing React components and improves code readability, it is **not mandatory**. You can create React components and elements directly using plain JavaScript by calling `React.createElement`. However, without `JSX`, the code can become less intuitive and harder to maintain. For these reasons, most developers prefer using `JSX` to write clean and expressive React code.
+
+---
+
+## Is `ES6` mandatory for React?
+
+`ES6` is not mandatory for `React` but is highly recommendable. The latest projects created on React rely a lot on ES6. React uses ES6, and you should be familiar with some of the new features like: Classes, Arrow Functions, Variables(let, const).
+ES6 stands for ECMAScript 6. ECMAScript was created to standardize JavaScript, and ES6 is the 6th version of ECMAScript, it was published in 2015.
+
+---
 ## What is Babel and how does it work in React?
 
 In React, we write JSX, which looks like HTML but is not valid JavaScript syntax. Since browsers cannot understand JSX directly, it needs to be converted (or transpiled) into regular JavaScript. This is where Babel comes in.
@@ -228,4 +241,70 @@ Babel is a JavaScript transpiler that converts JSX into browser-compatible JavaS
 
 In addition to transpiling JSX, Babel also converts modern JavaScript (like ES6+) into an older version of JavaScript that works in older browsers. This ensures compatibility across various browser environments.
 
+---
+
+## What is Component Composition?
+
+Component Composition is a way to combine small, reusable pieces of code (called components) to build bigger and more complex parts of an application. It’s like using building blocks to create a structure. Each block does its own job, and together they make the whole thing work.
+
+---
+
+## What is `<React.Fragment></React.Fragment>` and `<></>`?
+
+`<React.Fragment></React.Fragment>` is a feature in React that allows you to return multiple elements from a React component by allowing you to group a list of children without adding extra nodes to the DOM.
+`<></>` is the shorthand tag for `React.Fragment`. The only difference between them is that the shorthand version does not support the key attribute.
+
+#### Example
+
+```
+return (
+        <React.Fragment>
+            <Header />
+            <Navigation />
+            <Main />
+            <Footer />
+        </React.Fragment>
+    );
+
+return (
+        <>
+            <Header />
+            <Navigation />
+            <Main />
+            <Footer />
+        </>
+    );
+```
+
+---
+## Props
+
+Props are data passed from a parent component to a child component. They let the child component use this data for rendering or logic.
+
+**Example:**
+
+```jsx
+// Parent Component
+function App() {
+  return <Greeting name="Soumadip" />;
+}
+
+// Child Component
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+```
+
+**Output:**  
+Hello, Soumadip!
+
+---
+## What is `Config Driven UI`?
+
+A `Config Driven UI` is built based on the configuration data that the application receives. This approach makes the app more dynamic and easier to update. It is a common and simple way to create user interfaces that can adapt to changes.
+
+Using a `Config Driven UI` saves development time and effort, as it provides a flexible and reusable structure. For example, a login form in most apps often requires updates, such as adding new form validations, dropdown options, or design changes. With a `Config Driven UI`, these updates can be handled easily without rewriting a lot of code.
+
+---
+---
 ---
