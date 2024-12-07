@@ -306,5 +306,26 @@ A `Config Driven UI` is built based on the configuration data that the applicati
 Using a `Config Driven UI` saves development time and effort, as it provides a flexible and reusable structure. For example, a login form in most apps often requires updates, such as adding new form validations, dropdown options, or design changes. With a `Config Driven UI`, these updates can be handled easily without rewriting a lot of code.
 
 ---
+
+## Why do we need `keys` in React?
+
+A `key` is a special attribute you need to include when creating lists of elements in React. Keys are used in React to identify which items in the list are changed, updated, or deleted. In other words, we can say that keys are unique Identifier used to give an identity to the elements in the lists.
+Keys should be given to the elements within the array to give the elements a stable identity.
+#### Example
+
+```
+<li key={0}>1</li>
+<li key={1}>2</li>
+<li key={2}>3</li>
+```
+
+---
+
+## Can we use `index as keys` in React?
+
+Yes, we can use the `index as keys`, but it is not considered as a good practice to use them because if the order of items may change. This can negatively impact performance and may cause issues with component state.
+Keys are taken from each object which is being rendered. There might be a possibility that if we modify the incoming data react may render them in unusual order.
+
+---
 ---
 ---
