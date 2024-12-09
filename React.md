@@ -377,7 +377,7 @@ Importing the default export:
 import MyComponent from "./MyComponent";
 ```
 
-##### 3. * as Export
+##### 3.` * as` Export
 
 - Imports all the exports from a module as a single object, which allows accessing individual exports as properties.
 
@@ -424,6 +424,131 @@ import MyComponent, { MyComponent2 } from "./MyComponent";
 ```
 
 This approach gives flexibility by allowing both named and default imports.
+
+---
+
+## What are `React Hooks`?
+
+React Hooks were introduced in React 16.8. They are simple JavaScript functions that let you use reusable logic in functional components. Hooks can handle state and side effects without needing to write class components. This makes it easy to share and reuse logic across different components.
+
+##### Common built-in React Hooks:
+
+- **useState**: Manages state. It gives a state variable and a function to update it.
+- **useEffect**: Handles side effects like API calls, timers, or subscriptions.
+- **useContext**: Provides the current value of a context.
+- **useReducer**: An alternative to useState for managing complex state.
+- **useCallback**: Memorizes a callback function to prevent unnecessary re-renders.
+- **useMemo**: Memorizes a value for better performance.
+- **useRef**: Gives a mutable object to access a child component or store a value that doesn’t re-render.
+- **useLayoutEffect**: Runs synchronously after DOM updates. Prefer useEffect for most cases.
+- **useDebugValue**: Adds labels for custom hooks in React DevTools.
+
+---
+
+## What is State, and Why Do We Need It?
+- **State** is a type of data that a component holds over time. It’s essential for information that a component needs to "remember" across the app's life cycle.
+- Think of it as the component’s **memory**.
+- **State Variable/Piece of State**: Refers to a single piece of data within a component’s state.
+- Updating **component state** prompts React to **re-render the component**.
+- **Examples of state** include things like notification counts, the text in an input field, or the active tab in a tabbed interface.
+
+---
+
+## State VS Props
+
+| Feature               | **State**                                      | **Props**                                                             |
+| --------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| **Definition**        | Internal data managed by the component itself. | Data passed from a parent component.                                  |
+| **Ownership**         | Owned by the component.                        | Owned by the parent component.                                        |
+| **Modifiability**     | Can be updated within the component.           | Read-only; cannot be modified by the child component.                 |
+| **Trigger Re-render** | Yes, when state is updated.                    | Yes, when new props are received (usually from parent state changes). |
+| **Purpose**           | Used for interactivity and component memory.   | Used to configure child components (like function parameters).        |
+| **Example Usage**     | Storing a user’s input in a form.              | Displaying text or settings from a parent component.                  |
+
+---
+
+## Why Do We Need the `useState` Hook?
+
+The `useState` hook is essential for maintaining state in a React application. It allows us to add and manage state within a functional component. The `useState` hook ensures that the UI updates dynamically whenever the state changes. When the state is updated, React re-renders the component with the new state value, keeping the UI synchronized with the underlying data.
+
+The `useState` hook is a special function that takes the **initial state** as an **argument** and **returns an array** with two elements:
+1. The current state value.
+2. A function to update the state.
+
+The `useState` hook encapsulates a single state value. To manage multiple pieces of state, you need to make separate calls to `useState`.
+
+##### Syntax of `useState`
+
+```jsx
+const [state, setState] = useState(initialState);
+```
+
+##### Importing `useState`
+
+To use `useState`, import it from React like this:
+
+```jsx
+import React, { useState } from "react";
+```
+
+##### Example of Using `useState` in a Functional Component
+
+```jsx
+const Example = (props) => {
+  const [count, setCount] = useState(0); // Using useState
+
+  return <div>{count}</div>;
+};
+```
+
+---
+
+## Difference between `Virtual DOM` and `Real DOM`?
+
+DOM stands for `Document Object Model`, which represents your application UI and whenever the changes are made in the application, this DOM gets updated and the user is able to visualize the changes. DOM is an interface that allows scripts to update the content, style, and structure of the document.
+
+##### Virtual DOM
+  - Virtual DOM is a lightweight copy of the real DOM. It can be updated without directly affecting the actual DOM.
+  - Think of it like a blueprint of a machine—changes are made to the blueprint but don’t immediately affect the machine.
+  - **Reconciliation** is the process of comparing the Virtual DOM and Real DOM to apply only necessary updates. React uses a **diffing algorithm** for this process.
+  
+##### Real DOM
+  - The Real DOM is a tree-like structure representing the actual web page. Developers can modify it using JavaScript.
+  - Any changes to the Real DOM require re-rendering the updated elements and their children, making it slower.
+  - For example, if a list is updated, the Real DOM re-renders the entire list, not just the updated part.
+
+| `Real DOM`                                                       | `Virtual DOM`                                            |
+| ---------------------------------------------------------------- | -------------------------------------------------------- |
+| DOM manipulation is very expensive                               | DOM manipulation is very easy                            |
+| There is too much memory wastage                                 | No memory wastage                                        |
+| It updates Slow                                                  | It updates fast                                          |
+| It can directly update HTML                                      | It can’t update HTML directly                            |
+| Creates a new DOM for every update                               | Only updates changed elements in JSX                     |
+| It allows us to directly target any specific node (HTML element) | It can produce about 200,000 Virtual DOM Nodes / Second. |
+| It represents the UI of your application                         | It is only a virtual representation of the DOM           |
+
+---
+
+## What is `Reconciliation` in React?
+
+- `Reconciliation` is the process that helps React update the Browser DOM efficiently.
+- React uses a `diffing algorithm` to make component updates faster and more predictable.
+- When a component is updated, React compares the real DOM with the Virtual DOM (a lightweight copy of the DOM).
+- React keeps a copy of the real DOM called the `Virtual DOM`.
+- When there are changes, React creates a new Virtual DOM and compares it with the old one using the `Diffing Algorithm`.
+- React identifies which parts of the Virtual DOM have changed and updates only those parts in the real DOM.
+- This process is called Reconciliation, and it makes React more efficient by updating only what is necessary.
+
+---
+
+## What is `React Fiber`?
+
+React Fiber is a system in ReactJS that makes rendering faster, smoother, and smarter. It was introduced in React 16 to improve the reconciliation process. Fiber helps React handle updates more efficiently.
+
+Since Fiber is asynchronous, React can:
+- Pause, resume, and restart rendering work as new updates come in
+- Reuse completed work or cancel it if not needed
+- Split work into smaller parts and prioritize tasks based on importance
 
 ---
 ---
