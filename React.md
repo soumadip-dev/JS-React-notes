@@ -6,7 +6,7 @@ A **package manager** is a tool that automates the process of installing, updati
 - **pip** (Python Package Installer)
 - **Yarn** (An alternative to `npm` for managing JavaScript libraries)
 
-#### How to Initialize npm?
+##### How to Initialize npm?
 
 To initialize `npm`, you can use the following commands:
 
@@ -29,7 +29,7 @@ npm init -y
 - By reducing the number of files, bundlers improve the efficiency of file transfers from the server to the client.
 - This process helps in enhancing load times and overall performance of the application.
 
-#### Why Do We Need a Bundler?
+##### Why Do We Need a Bundler?
 
 - **Code Splitting**: Breaks your app into smaller pieces that load only when needed, speeding up performance.
 - **Dependency Management**: Combines all the required dependencies into a single bundle.
@@ -37,13 +37,13 @@ npm init -y
 - **Development Tools**: Provides features like hot module replacement (HMR) to improve the development process.
 - **Efficient File Transfer**: Reduces the time taken to transfer files, making your app load faster.
 
-#### Examples of Bundlers:
+##### Examples of Bundlers:
 
 - Webpack
 - Parcel
 - Vite
 
-#### Installation Commands for Parcel:
+##### Installation Commands for Parcel:
 
 - **Install:**
     
@@ -212,7 +212,7 @@ root.render(myElement);
 
 - **Example 2: Without JSX**
 
-```javascript
+```jsx
 const myElement = React.createElement('h1', {}, 'I do not use JSX!');
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(myElement);
@@ -254,9 +254,9 @@ Component Composition is a way to combine small, reusable pieces of code (called
 `<React.Fragment></React.Fragment>` is a feature in React that allows you to return multiple elements from a React component by allowing you to group a list of children without adding extra nodes to the DOM.
 `<></>` is the shorthand tag for `React.Fragment`. The only difference between them is that the shorthand version does not support the key attribute.
 
-#### Example
+##### Example
 
-```
+```jsx
 return (
         <React.Fragment>
             <Header />
@@ -311,7 +311,7 @@ Using a `Config Driven UI` saves development time and effort, as it provides a f
 
 A `key` is a special attribute you need to include when creating lists of elements in React. Keys are used in React to identify which items in the list are changed, updated, or deleted. In other words, we can say that keys are unique Identifier used to give an identity to the elements in the lists.
 Keys should be given to the elements within the array to give the elements a stable identity.
-#### Example
+##### Example
 
 ```
 <li key={0}>1</li>
@@ -325,6 +325,105 @@ Keys should be given to the elements within the array to give the elements a sta
 
 Yes, we can use the `index as keys`, but it is not considered as a good practice to use them because if the order of items may change. This can negatively impact performance and may cause issues with component state.
 Keys are taken from each object which is being rendered. There might be a possibility that if we modify the incoming data react may render them in unusual order.
+
+---
+
+## What is the difference between `Named export`, `Default export`, and `* as export`?
+
+In ES6, we can export and import modules to use them in other files. There are three main ways to export modules: `Named export`, `Default export`, and `* as export`.
+
+##### 1. Named Export
+
+- Allows multiple named exports per file.
+- When importing, the names must match exactly, and `{}` braces are required.
+
+**Example:**  
+Exporting components from `MyComponent.js`:
+
+```jsx
+export const MyComponent = () => {};
+export const MyComponent2 = () => {};
+```
+
+Importing named exports:
+
+```jsx
+// Importing a single named export
+import { MyComponent } from "./MyComponent";
+
+// Importing multiple named exports
+import { MyComponent, MyComponent2 } from "./MyComponent";
+
+// Renaming an import
+import { MyComponent2 as MyNewComponent } from "./MyComponent";
+```
+
+##### 2. Default Export
+
+- Only one default export is allowed per file.
+- The import name can be anything, and `{}` braces are not used.
+
+**Example:**  
+Exporting a default component from `MyComponent.js`:
+
+```jsx
+const MyComponent = () => {};
+export default MyComponent;
+```
+
+Importing the default export:
+
+```jsx
+import MyComponent from "./MyComponent";
+```
+
+##### 3. * as Export
+
+- Imports all the exports from a module as a single object, which allows accessing individual exports as properties.
+
+**Example:**  
+Exporting multiple components from `MyComponent.js`:
+
+```jsx
+export const MyComponent = () => {};
+export const MyComponent2 = () => {};
+export const MyComponent3 = () => {};
+```
+
+Importing all exports:
+
+```jsx
+import * as MainComponents from "./MyComponent";
+```
+
+Using in JSX:
+
+```jsx
+<MainComponents.MyComponent />
+<MainComponents.MyComponent2 />
+<MainComponents.MyComponent3 />
+```
+
+##### Combining `Named Export` and `Default Export`
+
+You can use both export types in the same file.
+
+**Example:**  
+Exporting:
+
+```jsx
+export const MyComponent2 = () => {};
+const MyComponent = () => {};
+export default MyComponent;
+```
+
+Importing:
+
+```jsx
+import MyComponent, { MyComponent2 } from "./MyComponent";
+```
+
+This approach gives flexibility by allowing both named and default imports.
 
 ---
 ---
