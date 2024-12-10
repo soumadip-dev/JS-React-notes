@@ -551,5 +551,44 @@ Since Fiber is asynchronous, React can:
 - Split work into smaller parts and prioritize tasks based on importance
 
 ---
+
+## What is `Microservice`?
+
+`Microservice` (or microservice architecture) is a way to build software where it’s divided into small, independent parts like a database, server, or UI. These parts communicate with each other using clear APIs and are managed by small teams.
+
+This approach makes software easier to scale, faster to build, and helps add new features quickly. Each service handles a specific task (following the **Separation of Concerns** principle) and has one clear responsibility (**Single Responsibility Principle**). This makes the system modular and easier to maintain.
+
+### **Benefits of Microservices**:
+
+- Flexible Scaling
+- Easy Deployment
+- Freedom to Use Different Technologies
+- Reusable Code
+- Better Resilience
+
+---
+
+## What is `Monolith architecture`?
+
+`Monolith architecture` is a traditional way of building software where everything is combined into a single, self-contained unit. All the parts of the software, like the database, server, and user interface, are tightly connected in one code base.
+
+To make any changes, you need to update the entire system by modifying the code, rebuilding, and redeploying the application. This process can be time-consuming and restrictive because the software is not divided into smaller, independent modules.
+
+---
+
+## What is the difference between `Monolith and Microservice`?
+
+|**Aspect**|**Monolithic Architecture**|**Microservices Architecture**|
+|---|---|---|
+|**Structure**|All processes are `tightly coupled` and run as a `single service`.|Built as `independent components` where each process runs as a `separate service`.|
+|**Scaling**|The entire application must be scaled even if only one process experiences a spike in `demand`.|`Individual services` can be scaled independently based on `demand`.|
+|**Complexity**|Becomes harder to `add or improve features` as the `codebase grows`.|Easier to implement `new features` as services are `focused`.|
+|**Failure Impact**|`Single process failure` impacts the entire application.|`Failure` in one service doesn’t `affect others`.|
+|**Communication**|Processes are `interconnected`.|Services communicate using `lightweight APIs`.|
+|**Flexibility**|`Difficult` to implement `new ideas`.|More `flexible` for updates and deployments.|
+|**Business Focus**|Built as one `large unit`.|Each service is `focused` on a `single function`.|
+
 ---
 ---
+---
+
