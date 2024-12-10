@@ -649,5 +649,35 @@ A `Shimmer UI` looks like the actual page design but without the real content. I
 Instead of displaying a loading spinner or circle, using a shimmer effect enhances the user experience by making the wait feel more interactive and visually appealing.
 
 ---
+
+## What is `CORS`?
+
+CORS (Cross-Origin Resource Sharing) is a system that uses HTTP headers to let a server specify which other origins (domains, schemes, or ports) can access its resources.
+
+It provides a way for a browser and server to communicate and decide if it’s safe to allow a request from a different origin.
+
+---
+## What is `Conditional Rendering`?
+
+`Conditional rendering` in React means showing different UI elements based on certain conditions, similar to how conditions work in `JavaScript`. You can use `if`, the `ternary operator`, or logical `&&` to decide what to display. React automatically updates the UI based on these conditions.
+
+Here’s an example:
+
+```jsx
+// Using the Ternary Operator (shorthand for if-else)
+{isLoggedIn ? <UserGreeting /> : <GuestGreeting />}
+
+// Using an if-else statement
+if (isLoggedIn) {
+  return <UserGreeting />;
+} else {
+  return <GuestGreeting />;
+}
+
+// Using Logical AND (&&)
+{isLoggedIn && <button>Logout</button>}
+```
+
+---
 ---
 ---
