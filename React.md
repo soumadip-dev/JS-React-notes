@@ -634,6 +634,13 @@ The `useEffect` hook in React is used to handle side effects in functional compo
     
     This will be triggered on every render, which could lead to unnecessary side effects if not carefully managed.
     
+---
+
+## What is `Shimmer UI`?
+
+A `Shimmer UI` looks like the actual page design but without the real content. It helps users get an idea of how the web or mobile app will look and feel while the page is still loading. This is especially useful when a page takes more than 3–5 seconds to load, as it shows users that something is happening in the background.
+
+Instead of displaying a loading spinner or circle, using a shimmer effect enhances the user experience by making the wait feel more interactive and visually appealing.
 
 ---
 ---
