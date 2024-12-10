@@ -552,13 +552,19 @@ Since Fiber is asynchronous, React can:
 
 ---
 
+## Why is React fast?
+
+React uses `React Fiber`, a new algorithm for `Reconciliation`. It compares the two versions of the `Virtual DOM`—the older one and the newer one. React identifies the differences (updates) between them and re-renders only the portions of the UI where updates are found, instead of re-rendering the entire page. This efficient update process makes React fast.
+
+---
+
 ## What is `Microservice`?
 
 `Microservice` (or microservice architecture) is a way to build software where it’s divided into small, independent parts like a database, server, or UI. These parts communicate with each other using clear APIs and are managed by small teams.
 
 This approach makes software easier to scale, faster to build, and helps add new features quickly. Each service handles a specific task (following the **Separation of Concerns** principle) and has one clear responsibility (**Single Responsibility Principle**). This makes the system modular and easier to maintain.
 
-### **Benefits of Microservices**:
+##### **Benefits of Microservices**:
 
 - Flexible Scaling
 - Easy Deployment
