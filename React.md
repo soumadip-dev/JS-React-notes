@@ -589,6 +589,52 @@ To make any changes, you need to update the entire system by modifying the code,
 |**Business Focus**|Built as one `large unit`.|Each service is `focused` on a `single function`.|
 
 ---
----
----
 
+## `useEffect` Hook in React
+
+The `useEffect` hook in React is used to handle side effects in functional components. Side effects include actions like **fetching API data**, **updating the DOM**, and **setting up subscriptions or timers**, which need careful handling to avoid unwanted behaviors.
+
+##### `useEffect` takes **Two Arguments:**
+
+- The first argument is a **callback function** that contains the side-effect logic.
+- The second argument is the **dependency array** (optional), which controls when the `useEffect` should run:
+    - **No dependency array**: The `useEffect` runs after every render.
+    - **Empty dependency array `[]`**: The `useEffect` runs only after the first render. This is useful for tasks like fetching data after the initial page load.
+    - **Non-empty dependency array `[currentState]`**: The `useEffect` runs every time any value inside the array changes. This can be used to trigger side effects when specific state or props are updated.
+
+##### Syntax Examples:
+
+1. **`useEffect` with an empty dependency array:**
+    
+    ```jsx
+    useEffect(() => {
+      // Side effect logic here (e.g., fetching data)
+    }, []);
+    ```
+    
+    This runs only after the first render, ideal for fetching API data.
+    
+2. **`useEffect` with a dependency array:**
+    
+    ```jsx
+    useEffect(() => {
+      setCurrentState("true");
+    }, [currentState]);
+    ```
+    
+    The callback runs whenever `currentState` changes.
+    
+3. **`useEffect` with no dependency array:**
+    
+    ```jsx
+    useEffect(() => {
+      // This runs every time the component re-renders
+    });
+    ```
+    
+    This will be triggered on every render, which could lead to unnecessary side effects if not carefully managed.
+    
+
+---
+---
+---
