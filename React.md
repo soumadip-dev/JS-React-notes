@@ -467,7 +467,7 @@ React Hooks were introduced in React 16.8. They are simple JavaScript functions 
 
 ---
 
-## Why Do We Need the `useState` Hook?
+## Why Do We Need the useState Hook in React? What Are Its Rules?
 
 The `useState` hook is essential for maintaining state in a React application. It allows us to add and manage state within a functional component. The `useState` hook ensures that the UI updates dynamically whenever the state changes. When the state is updated, React re-renders the component with the new state value, keeping the UI synchronized with the underlying data.
 
@@ -500,6 +500,11 @@ const Example = (props) => {
   return <div>{count}</div>;
 };
 ```
+
+##### Rules for Using `useState`
+1. **Do not call `useState` outside a functional component** – hooks can only be used inside React functional components.
+2. **Call hooks at the top level** – never call `useState` inside loops, conditions (`if-else`), or nested functions.
+3. **Maintain readability** – call `useState` separately for each state variable you want to manage.
 
 ---
 
