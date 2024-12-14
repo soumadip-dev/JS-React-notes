@@ -742,6 +742,37 @@ Example:
 
 ---
 
+## `useRouteError` Hook
+
+The `useRouteError` hook is provided by React Router to access details about errors encountered during route rendering. This hook is particularly useful for creating error boundary pages.
+
+**Syntax**: `const error = useRouteError();`
+
+The `error` object contains properties such as `status`, `statusText`, `message`, and more, depending on the specific error that occurred. These properties can be utilized to display meaningful error messages to users.
+
+**Example**:
+
+```jsx
+import { useRouteError } from "react-router-dom";
+
+function ErrorPage() {
+  const error = useRouteError();
+
+  return (
+    <div>
+      <h1>Oops!</h1>
+      <p>Something went wrong:</p>
+      <p>Status: {error.status}</p>
+      <p>Status Text: {error.statusText}</p>
+      <p>Error Message: {error.message}</p>
+    </div>
+  );
+}
+
+export default ErrorPage;
+```
+
+---
 ---
 ---
 ---
