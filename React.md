@@ -508,6 +508,15 @@ const Example = (props) => {
 
 ---
 
+## What happens if we do `console.log(useState())`?
+
+If you log `useState()` to the console, you’ll see an array: `[undefined, function]`.
+
+- The first item (`state`) is `undefined`.
+- The second item (`setState`) is a function called `dispatchSetState`.
+
+---
+
 ## Difference between `Virtual DOM` and `Real DOM`?
 
 DOM stands for `Document Object Model`, which represents your application UI and whenever the changes are made in the application, this DOM gets updated and the user is able to visualize the changes. DOM is an interface that allows scripts to update the content, style, and structure of the document.
@@ -682,6 +691,56 @@ if (isLoggedIn) {
 // Using Logical AND (&&)
 {isLoggedIn && <button>Logout</button>}
 ```
+
+---
+
+## Types of Routing
+
+##### 1. Server-Side Routing (SSR)
+
+- In server-side routing, every navigation triggers an HTTP request to the server.  
+- The server processes the request and responds with a new HTML page, replacing the current one.  
+- This approach is commonly used in traditional web applications.  
+- **Example:** In SSR, every URL change requires a round trip to the server to fetch and display a new webpage.  
+
+##### 2. Client-Side Routing (CSR)
+
+- Client-side routing is managed by the browser, eliminating the need to reload the page.  
+- On the initial load, the entire web application is fetched from the server and sent to the client.  
+- Subsequent URL changes are handled by a router library, dynamically rendering only the required components without sending requests to the server.  
+- This approach is commonly used in Single Page Applications (SPAs), such as those built with frameworks like React.  
+
+---
+
+## What is `SPA`?
+
+A **Single Page Application (SPA)** is a web application that dynamically updates the webpage with data from the web server without reloading or refreshing the entire page. 
+
+- All the HTML, CSS, and JavaScript are retrieved during the initial load.  
+- Additional data or resources are loaded dynamically as needed.  
+- An SPA is sometimes referred to as a **Single-Page Interface (SPI)** and uses client-side routing.  
+
+---
+
+## Link component in React
+
+In React, we usually avoid using the `<a>` anchor tag for navigation within a Single Page Application (SPA). Instead, we use the `Link` component from `react-router-dom`. To use it, import it as follows:
+
+```jsx
+import { Link } from 'react-router-dom';
+```
+
+The `Link` component prevents the browser from reloading the entire page. Instead, it updates the browser's history and renders only the specific component associated with the route. This behavior helps achieve the SPA functionality, making navigation seamless without a full page reload.
+
+Behind the scenes, the `Link` component is essentially a wrapper around the `<a>` tag, enhanced with routing functionality.
+
+Example:
+
+```jsx
+<Link to="/path">ABC</Link>
+```
+
+---
 
 ---
 ---
