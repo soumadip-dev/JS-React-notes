@@ -773,6 +773,35 @@ export default ErrorPage;
 ```
 
 ---
+
+## What is the purpose of the `useParams` hook in React Router DOM, and how is it used to access URL parameters?
+
+The `useParams` hook in React Router DOM is used to access the **URL parameters** of the current route. It returns an object containing key-value pairs of the dynamic segments defined in the route.
+
+**Example**:
+
+```jsx
+import React from "react";
+import { useParams } from "react-router-dom";
+
+const UserProfile = () => {
+  const { userId } = useParams(); // Access the `userId` parameter from the URL
+
+  return <h1>User ID: {userId}</h1>;
+};
+
+export default UserProfile;
+```
+
+**URL**:
+
+If the route is `/user/:userId` and you navigate to `/user/123`, `useParams()` will return:
+
+```jsx
+{ userId: "123" }
+```
+
+---
 ---
 
 ## React Class-Based Components
@@ -941,5 +970,3 @@ useEffect(() => {
 
 ---
 ---
-
-
