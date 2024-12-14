@@ -774,5 +774,75 @@ export default ErrorPage;
 
 ---
 ---
+
+## React Class-Based Components
+
+Class-based components are a way of defining components in React using ES6 classes. They extend the `React.Component` class and allow the use of state and lifecycle methods.
+
+**Syntax**:
+
+```jsx
+import React from "react";
+
+class ExCompo extends React.Component {
+  constructor(props) {
+    super(props); // Required to access `this.props`
+  }
+  
+  render() {
+    return (
+      <div>
+        <h1>{this.props.name}</h1>
+      </div>
+    );
+  }
+}
+
+export default ExCompo;
+```
+
 ---
+
+## Why Use `super(props)` in the Constructor?
+
+- In ES6, when a class extends another class (e.g., `class MyComponent extends React.Component`), the subclass must call the parent class's constructor (`super()`) **before accessing `this`**. This is enforced by JavaScript.
+- In React class-based components, the `constructor` of a subclass (our component) must call `super(props)` to initialize the component properly.
+- If we skip `super(props)`, **React cannot initialize `this.props`** for our component, and trying to access it will result in an error because `this.props` will still be undefined within the constructor.
+
+---
+
+## State in Class-Based Components
+
+##### Declaring State
+
+State is a special object in class components to manage dynamic data.
+
+```jsx
+constructor(props) {
+  super(props);
+  this.state = {
+    count: 0,
+    name: "React",
+  };
+}
+```
+
+##### Accessing State
+
+Use `this.state` to access state variables:
+
+```jsx
+render() {
+  return <h1>Count: {this.state.count}</h1>;
+}
+```
+
+##### Updating State
+
+Use `this.setState()` to update state variables. React automatically re-renders the component when state changes.
+
+```jsx
+this.setState({ count: this.state.count + 1 });
+```
+
 ---
