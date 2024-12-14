@@ -846,3 +846,100 @@ this.setState({ count: this.state.count + 1 });
 ```
 
 ---
+
+## Life Cycle of Child Class in Class-Based Components
+
+- The life cycle flow for **one child class** in class-based components is as follows:
+    1. Parent Constructor
+    2. Parent Render
+    3. Child Constructor
+    4. Child Render
+    5. Child `componentDidMount`
+    6. Parent `componentDidMount`
+- The life cycle flow for **two child classes** in class-based components is as follows:
+    1. Parent Constructor
+    2. Parent Render
+    3. Child 1 Constructor
+    4. Child 1 Render
+    5. Child 2 Constructor
+    6. Child 2 Render
+    7. Child 1 `componentDidMount`
+    8. Child 2 `componentDidMount`
+    9. Parent `componentDidMount`
+
+(This happens because React batches the rendering of the two child components for optimization before `componentDidMount`.)
+
+---
+
+## Phases of Class-Based Components / Why We Call API Inside `componentDidMount()`
+
+Class-based components in React have three primary phases: **Mounting**, **Updating**, and **Unmounting**.
+
+##### 1. Mounting Phase (Component Initialization and DOM Insertion)
+
+- **`constructor(props)`**: This method is called when the component is first initialized. It is used to set up the component’s initial state and bind event handlers.
+- **`render()`**: The `render()` method returns the JSX that represents the component's UI. This is called when React needs to update the DOM.
+- **`componentDidMount()`**: This method is called once the component has been mounted into the DOM. It is commonly used for tasks like making API calls, setting up subscriptions, or initializing third-party libraries. Since it runs after the initial render, it’s a safe place for any side effects, such as fetching data. API calls are made here because it ensures that the component is already rendered, preventing any errors related to accessing the DOM before it's fully available.
+
+Example:
+
+```jsx
+async componentDidMount() {
+  const data = await fetch("https://api.example.com/data");
+  const json = await data.json();
+  this.setState({ data: json });
+}
+```
+
+##### 2. Updating Phase (State or Props Change)
+
+- **`render()`**: This method is re-invoked every time the state or props change, ensuring that the UI is updated with the new data. In the case of an API call, it triggers a re-render because the state is updated with the fetched API data (JSON).
+- **`componentDidUpdate(prevProps, prevState)`**: This lifecycle method is called after the component has updated due to a change in either state or props. It's useful for responding to changes, like making additional API calls or updating state based on the new props.
+
+Example:
+
+```jsx
+componentDidUpdate(prevProps, prevState) {
+  if (prevState.count !== this.state.count) {
+    console.log("Count updated!");
+  }
+}
+```
+
+##### 3. Unmounting Phase (Component Removal from DOM)
+
+- **`componentWillUnmount()`**: This method is called just before the component is removed from the DOM. It is used to clean up any resources, such as clearing timers, canceling API requests, or removing event listeners. For example, when we switch to another page in a Single Page Application (SPA), components can keep running in the background even after we leave the page. If we don't stop these processes, they can slow down the browser, especially if we revisit the page and new processes start.
+
+Example:
+
+```jsx
+componentWillUnmount() {
+  clearInterval(this.timer);
+}
+```
+
+For further reference, you can explore the [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).
+
+##### Note:
+
+Class-based components use lifecycle methods like `componentDidMount()`, `componentDidUpdate()`, and `componentWillUnmount()`. In functional components, the same behavior is achieved using the `useEffect()` hook:
+
+```jsx
+useEffect(() => {
+  // ComponentDidMount or ComponentDidUpdate logic
+  return () => {
+    // ComponentWillUnmount logic
+  };
+}, [dependencies]);
+```
+
+---
+---
+
+
+
+
+---
+---
+
+
