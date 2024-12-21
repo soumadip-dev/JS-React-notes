@@ -965,7 +965,115 @@ useEffect(() => {
 ---
 ---
 
+## Reusing Logic with Custom Hooks
 
+Custom hooks in React are a great way to **reuse logic** across multiple components. When you find yourself writing similar code in different components, extracting that logic into a custom hook helps keep your code DRY (Don't Repeat Yourself) and maintainable.
+
+##### Steps to Create a Custom Hook
+
+1. **Identify reusable logic** in your components, such as fetching data, handling form input, or managing global state.
+2. Extract this logic into a function that starts with the prefix `use` (e.g., `useFetchData`, `useForm`).
+3. Use React hooks (like `useState`, `useEffect`, `useContext`) inside the custom hook.
+4. Return the necessary values or functions from the hook so they can be used in components.
+
+##### Example: Custom Hook for Fetching Data
+
+Here’s an example of a custom hook for fetching data from an API.
+
+##### 1. Create the custom hook: `useFetch.js`
+
+```jsx
+import { useState, useEffect } from "react";
+
+const useFetch = (url) => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetchData(); // Fetch menu when component mounts
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setData(data);
+  };
+
+  return data;
+};
+
+export default useFetch;
+```
+
+##### 2. Use the custom hook in a component:
+
+```jsx
+import React from "react";
+import useFetch from "./useFetch";
+
+const UserList = () => {
+  const data = useFetch("https://jsonplaceholder.typicode.com/users");
+  
+  return (
+    <ul>
+      {data && data.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+};
+
+export default UserList;
+```
+
+##### Benefits of Custom Hooks
+
+- **Reusability**: You can reuse the `useFetch` hook across multiple components without duplicating code.
+- **Separation of Concerns**: Logic is moved out of components, making them cleaner and focused on presentation.
+- **Testability**: You can test custom hooks independently of components.
+
+---
+
+## Lazy loading
+
+Lazy loading in React is a technique used to load components only when they are needed, rather than loading everything upfront when the app starts. This helps improve performance by reducing the initial load time, which can be especially useful for larger applications with many components.
+
+In React, lazy loading is implemented using `React.lazy()` in combination with `Suspense`. Here's how it works:
+
+##### Steps for Lazy Loading:
+
+1. **Use `React.lazy()`**: This is used to dynamically import a component only when it's required.
+
+    Example:
+    ```jsx
+    const MyComponent = React.lazy(() => import('./MyComponent'));
+    ```
+    
+2. **Wrap the component in `Suspense`**: Since lazy-loaded components can take some time to load, React provides `Suspense` to handle this loading state. You can display a loading spinner or any other fallback UI while the component is loading.
+    
+    Example:
+    ```jsx
+    import React, { Suspense } from 'react';
+    
+    const MyComponent = React.lazy(() => import('./MyComponent'));
+    
+    function App() {
+      return (
+        <div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <MyComponent />
+          </Suspense>
+        </div>
+      );
+    }
+    ```
+    
+##### Why Use Lazy Loading:
+
+- **Improved Performance**: Reduces the initial bundle size by loading components only when they are needed.
+- **Faster Page Load**: Initially loads only essential components, improving the initial loading speed.
+- **Efficient Resource Use**: Loads resources (components) only when they are required, which optimizes the use of bandwidth and memory.
+
+Lazy loading is particularly helpful for applications with large or complex UIs, as it ensures that not all components are loaded at once, which can lead to faster render times and better user experience.
 
 
 ---
